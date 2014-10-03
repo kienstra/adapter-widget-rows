@@ -1,0 +1,100 @@
+/* Only enqueued if user can 'manage_options' */
+
+.ui-sortable-placeholder { 
+  border : 10px dashed #BBB !important ;
+  visibility : visible !important ;
+}
+
+.row.awr-row {
+  min-height : 60px ;
+  margin-top : 3rem ;
+  margin-bottom : 3rem ;  
+}
+
+.row.awr-row a:focus {
+  outline-width : 0 ;
+  text-decoration : none ;
+}  
+
+.awr-edit-controls {    
+  position : absolute ;
+  left : 15px ;
+  top : -22px ;
+  width : 95% ;
+  opacity : .75 ;
+}
+
+.awr-edit-controls:hover {
+  opacity : 1.0 ;
+}
+
+.awr-sidebar-icons {
+  position : absolute ;
+  left : 15px ;
+  top : -25px ;
+  display : none ;
+}
+
+.awr-sidebar-icons a {
+  cursor : pointer ;
+}
+
+.awr-sidebar-icons a:hover ,
+.awr-edit-controls a:hover {
+  text-decoration : none ;
+}
+
+.awr-sidebar-icons .glyphicon,
+.awr-edit-controls .glyphicon {
+  font-size : 16px ;
+}
+
+.row.awr-row.awr-empty ,
+.row.awr-row.awr-row-with-border {
+  border : 3px dashed #353D52 ;
+}
+
+.row.awr-row.awr-empty {
+  content : "empty row" ;
+  position : relative ;  
+}
+
+.row.awr-row.awr-empty .awr-sidebar-icons {
+  display : inherit ;
+}
+
+.awr-edit-controls .glyphicon {
+  display : inline ;
+  cursor : pointer ;
+}
+
+.awr-edit-controls .glyphicon-edit {
+  margin-right : 1rem ;
+}
+
+.awr-edit-controls .glyphicon-plus {
+  margin-right : 1.7rem ;
+}
+
+.popover-content {
+  min-height : 5rem ;
+  min-width : 19rem ;
+  cursor : default ;
+  background-color : white ; 
+}
+
+.popover-content a:first-child {
+  margin-right : 1rem ;
+}
+
+a.awr-popover {
+  tabindex : 0 ;
+}
+
+.awr-only-sidebar .awr-sidebar-icons .awr-delete-sidebar {
+  display : none ;
+}
+
+.control-section.accordion-section {
+  display : block ;
+}
