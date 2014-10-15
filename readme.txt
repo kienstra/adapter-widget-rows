@@ -20,6 +20,8 @@ Drag and drop widgets into horizontal rows. Looks good on any screen.
 * Works with themes "evolve," "Unite," and "DevDmBootstrap3."
 * Works with "Openstrap," but icons are unclear.
 
+[youtube https://www.youtube.com/watch?v=xIAAr8MLpJ0]
+
 == Installation ==
 
 1. Upload the adapter-widget-rows directory to your /wp-content/plugins directory.

@@ -2,7 +2,7 @@
 /*
 
 Plugin Name: Adapter Widget Rows
-Plugin URI: www.ryankienstra.com/widget-rows
+Plugin URI: www.ryankienstra.com/plugins/adapter-widget-rows
 Description: Drag and drop widgets into rows. To get started, click "Settings" and enter a page name. Find that page in the front of your site and add widgets.
 Version: 1.0.0
 Author: Ryan Kienstra
