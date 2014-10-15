@@ -8,12 +8,12 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Drag and drop widgets into horizontal rows. Looks good on any screen.
+Drag and drop widgets on your full screen. They'll fit into horizontal rows, and re-size on mobile devices. Create up to 6 rows.
 
 == Description ==
 
 * Must have Twitter Bootstrap 3 and Glyphicons.
-* Drag and drop 1-6 widgets in each horizontal row.
+* Drag and drop 1-4 widgets in each horizontal row.
 * Easy: each widget has a button to edit, add, delete.
 * Build an entire page with widgets.
 * Approve changes before publishing them.
