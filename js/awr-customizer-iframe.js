@@ -5,14 +5,14 @@
 			sidebar_id = $( this ).attr( 'id' );
 			$widget_children = $( this ).children( '.widget' );
 			if ( $widget_children.length > 0 ) {
-	$widget_children.map( function() {
-	 $( this ).data( 'awr-parent-sidebar' , sidebar_id );
-	} );
+				$widget_children.map( function() {
+					$( this ).data( 'awr-parent-sidebar' , sidebar_id );
+				} );
 			}
 			return this;
 		};
 
-		function remove_title_element_from_widgets() { 
+		function remove_title_element_from_widgets() {
 			$( '.widget' ).removeAttr( 'title' );
 		}
 
@@ -32,10 +32,10 @@
 			awr_regex = /awr-[\d]{1,5}-[\d]{1,5}/;
 
 			if ( id_of_open_section.match( wle_widget_regex ) ) {
-	return id_of_open_section.match( wle_widget_regex );
+				return id_of_open_section.match( wle_widget_regex );
 			}
 			else if ( $open_accordion_section.attr( 'id' ).match( awr_regex ) ) {
-	return $open_accordion_section.attr( 'id' ).match( awr_regex );
+				return $open_accordion_section.attr( 'id' ).match( awr_regex );
 			}
 		}
 
@@ -43,16 +43,17 @@
 			var $iframe_body = $( 'html, body' );
 			var $el = $iframe_body.find( '#' + element_id );
 			if ( ! $el.length ) {
-	return false;
+				return false;
 			}
 			var scrollTop_value = ( $el.offset().top > 25 ) ? ( $el.offset().top - 25 ) : ( $el.offset().top );
 			$iframe_body.animate( {
-	 scrollTop : scrollTop_value
+				scrollTop : scrollTop_value
 			} , 500 );
 		}
 
 		var sidebar_selector = '.awr-row' ,
-	sortable_handle = '.awr-edit-controls';
+		    sortable_handle = '.awr-edit-controls';
+
 		sortableSidebarSetup( sidebar_selector );
 
 		function sortableSidebarSetup( sidebar_selector ) {
@@ -60,29 +61,29 @@
 			makeSidebarWidgetsSortable( sidebar_selector );
 
 			$( sidebar_selector ).map( function() {	/* this instead of sidebar_selector? */
-	$( this ).assignIdentifiersToSortableWidgets();
+				$( this ).assignIdentifiersToSortableWidgets();
 			} );
 		}
 
 		function set_up_sortable_handle() {
 			$( sortable_handle ).on( 'hover' , function() {
-	$( this ).css( 'cursor' , 'move' );
+				$( this ).css( 'cursor' , 'move' );
 			} );
 			$( sortable_handle ).attr( 'title' , 'drag and drop' );
 		}
 
 		function makeSidebarWidgetsSortable( sidebar_selector ) {
 			$( sidebar_selector ).sortable( {
-		tolerance : 'pointer' ,
-		items		 : '.widget' ,
-		dropOnEmpty : true ,
-		connectWith : sidebar_selector ,
-		handle : sortable_handle ,
-		start : function( event , ui ) {} ,
-		stop : function( event , ui ) {} ,
-		receive : function( event , ui ) {} ,
-		update : function( event , ui ) {} ,
-		over : function( event , ui ) {} ,
+				tolerance : 'pointer' ,
+				items		 : '.widget' ,
+				dropOnEmpty : true ,
+				connectWith : sidebar_selector ,
+				handle : sortable_handle ,
+				start : function( event , ui ) {} ,
+				stop : function( event , ui ) {} ,
+				receive : function( event , ui ) {} ,
+				update : function( event , ui ) {} ,
+				over : function( event , ui ) {} ,
 			} );
 		}
 
@@ -95,17 +96,17 @@
 		} );
 
 		$( sidebar_selector ).on( 'sortreceive' , function( event , ui ) {
-	assignBootstrapClassesToWidgets();
-	sidebar_id = $( this ).attr( 'id' );
-	var parent_sidebar_of_each_widget = getParentSidebarsOfSortableWidgets( $( this ) );
-	var sortable_order = $( this ).sortable( 'toArray' );
+			assignBootstrapClassesToWidgets();
+			sidebar_id = $( this ).attr( 'id' );
+			var parent_sidebar_of_each_widget = getParentSidebarsOfSortableWidgets( $( this ) );
+			var sortable_order = $( this ).sortable( 'toArray' );
 
-	data = { sidebar_id			: sidebar_id ,
-	 parent_sidebars : parent_sidebar_of_each_widget ,
-	 sortable_order	: sortable_order ,
+			data = { sidebar_id	 : sidebar_id ,
+				 parent_sidebars : parent_sidebar_of_each_widget ,
+				 sortable_order	 : sortable_order ,
 				};
 
-	parent.jQuery( 'body' ).trigger( 'awr-remove-and-insert-widget' , data );
+			parent.jQuery( 'body' ).trigger( 'awr-remove-and-insert-widget' , data );
 		} );
 
 		// when iframe's widgets are moved, trigger event to reorder them in the customizer controls
@@ -133,19 +134,19 @@
 		} );
 
 		function assignBootstrapClassesToWidgets() {
-			 $( sidebar_selector ).each( function() {
-	 var column_prefix = 'col-md-';
-	 var $child_widgets = $( this ).children( '.widget' ).not( '.ui-sortable-helper' );
-	 var column_size = Math.floor( 12 / $child_widgets.length );
-	 if ( column_size > 12 ) {
-		 return;
-	 }
-	 var new_column_class = column_prefix + column_size;
-	 $( this ).children( '.widget' ).each( function() {
-		 var current_classes = $( this ).attr( 'class' );
-		 var new_classes = current_classes.replace( /col-md-[\d]+/ , new_column_class );
-		 $( this ).attr( 'class' ,	new_classes );
-	 } );
+			$( sidebar_selector ).each( function() {
+				var column_prefix = 'col-md-';
+				var $child_widgets = $( this ).children( '.widget' ).not( '.ui-sortable-helper' );
+				var column_size = Math.floor( 12 / $child_widgets.length );
+				if ( column_size > 12 ) {
+					return;
+				}
+				var new_column_class = column_prefix + column_size;
+				$( this ).children( '.widget' ).each( function() {
+					var current_classes = $( this ).attr( 'class' );
+					var new_classes = current_classes.replace( /col-md-[\d]+/ , new_column_class );
+					$( this ).attr( 'class' ,	new_classes );
+				} );
 			 } );
 		}
 
@@ -181,9 +182,9 @@
 			parent.jQuery( 'body' ).trigger( 'awr-delete-widget' , data );
 
 			$( this ).parents( '.widget' ).fadeOut( 500 , function() {
-	$( this ).detach();
-	assignBootstrapClassesToWidgets();
-	awrUtility.manage_amounts_of_widgets_and_rows();
+				$( this ).detach();
+				assignBootstrapClassesToWidgets();
+				awrUtility.manage_amounts_of_widgets_and_rows();
 			} );
 			return false;
 		} );
