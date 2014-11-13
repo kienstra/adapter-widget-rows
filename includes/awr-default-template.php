@@ -4,9 +4,9 @@
 */
 
 if ( ! defined('ABSPATH') ) {
-  die( '-1' );
+	die( '-1' );
 }
 
-get_header() ;
-  AWR_Markup::echo_sidebars() ;   
-get_footer() ; ?>
+get_header();
+	AWR_Markup::echo_sidebars();	 
+get_footer(); ?>

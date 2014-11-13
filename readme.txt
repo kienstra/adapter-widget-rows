@@ -45,9 +45,9 @@ No, only administrators, or those with 'manage_options' capabilities. But you ca
 = I don't need all 6 of the rows on the page. What can I do? =
 
 You and other administrators are the only ones who will see empty rows. Still, you can change the number of rows on a page by entering this in your functions.php file:
-  `add_filter( 'awr_amount_of_sidebars_on_page' , 'my_awr_sidebar_count' ) ;
+  `add_filter( 'awr_amount_of_sidebars_on_page' , 'my_awr_sidebar_count' );
   function my_awr_sidebar_count( $count ) {
-    return 3 ; // or your number
+    return 3; // or your number
   }`
 
 = I accidentally deleted my page "Widget Rows" page in the settings page. How do I get it back? =
