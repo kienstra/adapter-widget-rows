@@ -1,16 +1,16 @@
 ( function( $ ) {
 	$( function()	{
 		var sidebar_selector = '.awr-row' ,
-	popover_selector = '.awr-popover';
+		    popover_selector = '.awr-popover';
 
 		/* Sets up popovers at top of rows */
 		$( popover_selector ).popover(
 			{	html			: true ,
-	placement : 'bottom' ,
-	title		 : '' ,
-	animation : false ,
-	content	 : function() {
-				return $( this ).next().html();
+				placement : 'bottom' ,
+				title		 : '' ,
+				animation : false ,
+				content	 : function() {
+					return $( this ).next().html();
 			}
 		} );
 
