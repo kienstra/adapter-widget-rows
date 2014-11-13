@@ -1,15 +1,15 @@
 <?php
 
-class AWR_Markup { 
+class AWR_Markup {
 
 	private static $instance;
-	private $sidebars_in_page; 
+	private $sidebars_in_page;
 	private $page_id;
 	private $awr_id;
-	
+
 	private function __construct() {
 		$this->set_page_id();
-		$this->set_sidebars_in_page(); 
+		$this->set_sidebars_in_page();
 	}
 
 	public static function echo_sidebars() {
@@ -25,7 +25,7 @@ class AWR_Markup {
 	}
 
 	function set_sidebars_in_page() {
-		$this->sidebars_in_page = awr_get_ids_of_sidebars_for_page( $this->page_id ); 
+		$this->sidebars_in_page = awr_get_ids_of_sidebars_for_page( $this->page_id );
 	}
 
 	private function echo_markup_to_page() {
@@ -34,7 +34,7 @@ class AWR_Markup {
 		}
 		if ( $this->page_has_no_sidebars_with_widgets() ) {
 			$this->handle_no_sidebars_with_widgets();
-		}		
+		}
 	}
 
 	private function maybe_echo_sidebar_markup( $sidebar ) {
@@ -45,7 +45,7 @@ class AWR_Markup {
 
 	private function is_customizer_page() {
 		global $wp_customize;
-		return ( isset( $wp_customize ) ); 
+		return ( isset( $wp_customize ) );
 	}
 
 	private function echo_sidebar_markup( $sidebar ) {
@@ -53,19 +53,19 @@ class AWR_Markup {
 			if ( dynamic_sidebar( $sidebar ) );
 		echo "</div>\n";
 	}
-	
+
 	private function page_has_no_sidebars_with_widgets() {
 		foreach( $this->sidebars_in_page as $sidebar ) {
 			if ( is_active_sidebar( $sidebar ) ) {
 				return false;
 			}
 		}
-		return true;				
+		return true;
 	}
 
 	private function handle_no_sidebars_with_widgets() {
 		if ( current_user_can( 'manage_options' ) ) {
-			$first_sidebar = reset( $this->sidebars_in_page );		
+			$first_sidebar = reset( $this->sidebars_in_page );
 			$this->echo_sidebar_markup( $first_sidebar );
 		}
 	}
