@@ -11,7 +11,7 @@ License: GPLv2
 
 */
 
-if ( ! defined( 'WPINC' )	) {
+if ( ! defined( 'WPINC' ) ) {
  die;
 }
 

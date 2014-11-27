@@ -3,7 +3,7 @@ Contributors: ryankienstra
 Donate link: http://jdrf.org/get-involved/ways-to-donate/
 Tags: widgets, Bootstrap, mobile, responsive, sidebars
 Requires at least: 4.0
-Tested up to: 4.0 
+Tested up to: 4.1
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,6 +21,9 @@ Drag and drop widgets on your full screen. They'll fit into horizontal rows, and
 * Works with "Openstrap," but icons are unclear.
 
 [youtube https://www.youtube.com/watch?v=xIAAr8MLpJ0]
+
+Setup:
+[youtube https://www.youtube.com/watch?v=OeSU8EMSgDY]
 
 == Installation ==
 
