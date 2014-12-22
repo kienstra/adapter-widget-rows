@@ -24,12 +24,12 @@
 		function get_widget_that_is_open_in_customizer_controls() {
 			var $open_accordion_section = $( '.open' , window.parent.document );
 			if ( ! $open_accordion_section.length ) {
-	return false;
+				return false;
 			}
 			var id_of_open_section = $open_accordion_section.attr( 'id' ) ,
-			wle_widget_regex = /wle-[\d]{1,3}/ ,
-			general_widget_regex =	/customize-control-widget_([^\n]*)/;
-			awr_regex = /awr-[\d]{1,5}-[\d]{1,5}/;
+			    wle_widget_regex = /wle-[\d]{1,3}/ ,
+			    general_widget_regex = /customize-control-widget_([^\n]*)/ ,
+			    awr_regex = /awr-[\d]{1,5}-[\d]{1,5}/;
 
 			if ( id_of_open_section.match( wle_widget_regex ) ) {
 				return id_of_open_section.match( wle_widget_regex );

@@ -139,16 +139,16 @@
 			var wle_target = find_query_var_value( 'wle_target' );
 
 			if ( awr_edit && awr_widget ) {
-	open_widget_customizer_control( awr_edit , awr_widget );
+				open_widget_customizer_control( awr_edit , awr_widget );
 			}
 			else if ( wle_target ) {
-		open_wle_accordion_section( wle_target );
+				open_wle_accordion_section( wle_target );
 			}
 			else if ( awr_new ) {
-	open_new_widget_panel_for_sidebar( awr_new );
+				open_new_widget_panel_for_sidebar( awr_new );
 			}
 			else if ( awr_delete && awr_widget ) {
-	delete_widget_from_customizer_controls( awr_widget , awr_delete );
+				delete_widget_from_customizer_controls( awr_widget , awr_delete );
 			}
 		}
 
@@ -156,14 +156,14 @@
 			 var href = encodeURI( document.location.href );
 			 var query_value = href.match( query_var_key + '=([^&^#]*)' );
 			 if ( query_value && query_value.length > 0 ) {
-	return query_value[ 1 ];
+				 return query_value[ 1 ];
 			 }
 		 }
 
 		function open_widget_customizer_control( sidebar_id , widget_id ) {
 			if ( widget_id.match( /wle-[\d]{1,3}/ ) ) {
-	open_wle_accordion_section( widget_id );
-	return;
+				open_wle_accordion_section( widget_id );
+				return;
 			}
 			open_panel( 'widgets' );
 			open_sidebar_accordion_section( sidebar_id );
@@ -171,8 +171,8 @@
 
 			var interval = setInterval( scroll_interval , 200 );
 			function scroll_interval() {
-	scroll_sidebar_to_top_of_controls( sidebar_id );
-	clearInterval( interval ) ;
+				scroll_sidebar_to_top_of_controls( sidebar_id );
+				clearInterval( interval ) ;
 			}
 		}
 
@@ -190,7 +190,7 @@
 		function open_accordion_section( title ) {
 			var $accordion_section = $( '#accordion-section-' + title );
 			if ( ! $accordion_section.hasClass( 'open' ) ) {
-	$accordion_section.find( '.accordion-section-title' ).click();
+				$accordion_section.find( '.accordion-section-title' ).click();
 			}
 			scroll_section_to_top_of_controls( title );
 			return false;
@@ -203,7 +203,7 @@
 
 		function scroll_element_to_top_of_controls( $element ) {
 			if ( $element.length < 1 ) {
-	return;
+				return;
 			}
 			var $accordion_container = $( '.accordion-container' );
 			var current_scrollTop =	$accordion_container.scrollTop();
@@ -255,7 +255,7 @@
 
 		function if_is_a_wle_widget_delete_its_panel( widget_id ) {
 			if ( widget_id && widget_id.match( /wle-[\d]{1,3}/ ) ) {
-	$( '#accordion-section-' + widget_id ).hide( 500 );
+				$( '#accordion-section-' + widget_id ).hide( 500 );
 			}
 		}
 
