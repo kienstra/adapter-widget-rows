@@ -49,9 +49,9 @@ class AWR_Markup {
 	}
 
 	private function echo_sidebar_markup( $sidebar ) {
-		echo "<div class='row awr-row' id='{$sidebar}'>";
+		echo '<div class="row awr-row" id="' . esc_attr( $sidebar ) . '">';
 			if ( dynamic_sidebar( $sidebar ) );
-		echo "</div>\n";
+		echo '</div>';
 	}
 
 	private function page_has_no_sidebars_with_widgets() {
