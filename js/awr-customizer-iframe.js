@@ -74,16 +74,16 @@
 
 		function makeSidebarWidgetsSortable( sidebar_selector ) {
 			$( sidebar_selector ).sortable( {
-				tolerance : 'pointer' ,
-				items		 : '.widget' ,
+				tolerance   : 'pointer' ,
+				items       : '.widget' ,
 				dropOnEmpty : true ,
 				connectWith : sidebar_selector ,
-				handle : sortable_handle ,
-				start : function( event , ui ) {} ,
-				stop : function( event , ui ) {} ,
-				receive : function( event , ui ) {} ,
-				update : function( event , ui ) {} ,
-				over : function( event , ui ) {} ,
+				handle      : sortable_handle ,
+				start       : function( event , ui ) {} ,
+				stop        : function( event , ui ) {} ,
+				receive     : function( event , ui ) {} ,
+				update      : function( event , ui ) {} ,
+				over        : function( event , ui ) {} ,
 			} );
 		}
 
@@ -117,7 +117,7 @@
 			var sortable_order = $( this ).sortable( 'toArray' );
 			awrUtility.manage_amounts_of_widgets_and_rows();
 
-			data = { sidebar_id			: sidebar_id ,
+			data = { sidebar_id	: sidebar_id ,
 				parent_sidebars : parent_sidebar_of_each_widget ,
 				sortable_order	: sortable_order ,
 			};
