@@ -1,6 +1,18 @@
 ( function( $ ) {
 	$( function() {
+		var remove_title_element_from_widgets , widgetInCustomizerControls ,
+		    getWidgetThatIsOpenInCustomizerControls , scrollToTopOfIframe ,
+		    sortableSidebarSetup , setUpSortableHandle ,
+		    makeSidebarWidgetsSortable , assignBootstrapClassesToWidgets ,
+		    getParentSidebarsOfSortableWidgets , getWidgetId ,
+		    getIdOfParentSidebar;
 
+		var sidebar_selector = '.awr-row' ,
+		    sortable_handle = '.awr-edit-controls';
+
+		/*
+		 * jQuery plugin to give names to sortable widgets
+		 */
 		$.fn.assignIdentifiersToSortableWidgets = function() {
 			sidebar_id = $( this ).attr( 'id' );
 			$widget_children = $( this ).children( '.widget' );
@@ -12,16 +24,13 @@
 			return this;
 		};
 
-		function remove_title_element_from_widgets() {
+		/* Begin private utility functions */
+		
+		remove_title_element_from_widgets = function() {
 			$( '.widget' ).removeAttr( 'title' );
-		}
+		};
 
-		var widget_in_customizer_controls = get_widget_that_is_open_in_customizer_controls();
-		if ( widget_in_customizer_controls ) {
-			scroll_to_top_of_iframe( widget_in_customizer_controls );
-		}
-
-		function get_widget_that_is_open_in_customizer_controls() {
+		getWidgetThatIsOpenInCustomizerControls = function() {
 			var $open_accordion_section = $( '.open' , window.parent.document );
 			if ( ! $open_accordion_section.length ) {
 				return false;
@@ -39,9 +48,9 @@
 			}
 		}
 
-		function scroll_to_top_of_iframe( element_id ) {
-			var $iframe_body = $( 'html, body' );
-			var $el = $iframe_body.find( '#' + element_id );
+		scrollToTopOfIframe = function( element_id ) {
+			var $iframe_body = $( 'html, body' ),
+			    $el = $iframe_body.find( '#' + element_id );
 			if ( ! $el.length ) {
 				return false;
 			}
@@ -51,28 +60,23 @@
 			} , 500 );
 		}
 
-		var sidebar_selector = '.awr-row' ,
-		    sortable_handle = '.awr-edit-controls';
-
-		sortableSidebarSetup( sidebar_selector );
-
-		function sortableSidebarSetup( sidebar_selector ) {
-			set_up_sortable_handle();
+		sortableSidebarSetup = function( sidebar_selector ) {
+			setUpSortableHandle();
 			makeSidebarWidgetsSortable( sidebar_selector );
 
-			$( sidebar_selector ).map( function() {	/* this instead of sidebar_selector? */
+			$( sidebar_selector ).map( function() {	
 				$( this ).assignIdentifiersToSortableWidgets();
 			} );
 		}
 
-		function set_up_sortable_handle() {
+		setUpSortableHandle = function() {
 			$( sortable_handle ).on( 'hover' , function() {
 				$( this ).css( 'cursor' , 'move' );
 			} );
 			$( sortable_handle ).attr( 'title' , 'drag and drop' );
 		}
 
-		function makeSidebarWidgetsSortable( sidebar_selector ) {
+		makeSidebarWidgetsSortable = function( sidebar_selector ) {
 			$( sidebar_selector ).sortable( {
 				tolerance   : 'pointer' ,
 				items       : '.widget' ,
@@ -87,6 +91,43 @@
 			} );
 		}
 
+		getWidgetId = function( $element ) {
+			return $element.parents( '.widget' ).attr( 'id' );
+		}
+
+		getIdOfParentSidebar = function( $element ) {
+			return $element.parents( '.awr-row' ).attr( 'id' );
+		}
+
+		assignBootstrapClassesToWidgets = function() {
+			$( sidebar_selector ).each( function() {
+				var column_prefix = 'col-md-',
+				    $child_widgets = $( this ).children( '.widget' ).not( '.ui-sortable-helper' ),
+				    column_size = Math.floor( 12 / $child_widgets.length );
+				if ( column_size > 12 ) {
+					return;
+				}
+				var new_column_class = column_prefix + column_size;
+				$( this ).children( '.widget' ).each( function() {
+					var current_classes = $( this ).attr( 'class' ),
+					    new_classes = current_classes.replace( /col-md-[\d]+/ , new_column_class );
+					$( this ).attr( 'class' ,	new_classes );
+				} );
+			 } );
+		}
+
+		getParentSidebarsOfSortableWidgets = function( $sortable_widgets_container ) {
+			var sidebars = [];
+			$sortable_widgets_container.children( '.widget' ).each( function() {
+	 sidebars.push( $( this ).data( 'awr-parent-sidebar' ) );
+			} );
+			return sidebars;
+		}
+
+		/* End private utility functions */
+
+		/* Begin DOM event handlers for jQuery sortable API */
+
 		$( sidebar_selector ).on( 'sortstart' , function( event , ui ) {
 			$( sidebar_selector ).addClass( 'awr-row-with-border' );
 		} );
@@ -98,13 +139,14 @@
 		$( sidebar_selector ).on( 'sortreceive' , function( event , ui ) {
 			assignBootstrapClassesToWidgets();
 			sidebar_id = $( this ).attr( 'id' );
-			var parent_sidebar_of_each_widget = getParentSidebarsOfSortableWidgets( $( this ) );
-			var sortable_order = $( this ).sortable( 'toArray' );
+			var parent_sidebar_of_each_widget = getParentSidebarsOfSortableWidgets( $( this ) ) ,
+			    sortable_order = $( this ).sortable( 'toArray' ) ,
 
-			data = { sidebar_id	 : sidebar_id ,
-				 parent_sidebars : parent_sidebar_of_each_widget ,
-				 sortable_order	 : sortable_order ,
-				};
+			    data = {
+				     sidebar_id	     : sidebar_id ,
+				     parent_sidebars : parent_sidebar_of_each_widget ,
+				     sortable_order  : sortable_order ,
+				   };
 
 			parent.jQuery( 'body' ).trigger( 'awr-remove-and-insert-widget' , data );
 		} );
@@ -115,7 +157,7 @@
 			var sidebar_id = sidebar_id_with_underscores.replace( /-/g , '_' );
 			var parent_sidebar_of_each_widget = getParentSidebarsOfSortableWidgets( $( this ) );
 			var sortable_order = $( this ).sortable( 'toArray' );
-			awrUtility.manage_amounts_of_widgets_and_rows();
+			awrUtility.manageAmountsOfWidgetsAndRows();
 
 			data = { sidebar_id	: sidebar_id ,
 				parent_sidebars : parent_sidebar_of_each_widget ,
@@ -133,50 +175,28 @@
 			$( '#' + sidebar_id ).assignIdentifiersToSortableWidgets();
 		} );
 
-		function assignBootstrapClassesToWidgets() {
-			$( sidebar_selector ).each( function() {
-				var column_prefix = 'col-md-';
-				var $child_widgets = $( this ).children( '.widget' ).not( '.ui-sortable-helper' );
-				var column_size = Math.floor( 12 / $child_widgets.length );
-				if ( column_size > 12 ) {
-					return;
-				}
-				var new_column_class = column_prefix + column_size;
-				$( this ).children( '.widget' ).each( function() {
-					var current_classes = $( this ).attr( 'class' );
-					var new_classes = current_classes.replace( /col-md-[\d]+/ , new_column_class );
-					$( this ).attr( 'class' ,	new_classes );
-				} );
-			 } );
-		}
+		/* End DOM event handlers for jQuery sortable API */
 
-		function getParentSidebarsOfSortableWidgets( $sortable_widgets_container ) {
-			var sidebars = [];
-			$sortable_widgets_container.children( '.widget' ).each( function() {
-	 sidebars.push( $( this ).data( 'awr-parent-sidebar' ) );
-			} );
-			return sidebars;
-		}
+		/* Begin DOM event handlers for buttons above every widget */
 
-		/* Handlers for buttons above every widget */
 		$( '.awr-edit' ).live( 'click' , function() {
-			data = { widget_id : get_widget_id( $( this ) ) ,
-				sidebar_id : get_id_of_parent_sidebar( $( this ) )
+			data = { widget_id : getWidgetId( $( this ) ) ,
+				sidebar_id : getIdOfParentSidebar( $( this ) )
 			};
 			parent.jQuery( 'body' ).trigger( 'awr-open-widget-control' , data );
 			return false;
 		} );
 
 		$( '.awr-add-new-widget' ).live( 'click' , function() {
-			var sidebar_id = get_id_of_parent_sidebar( $( this ) );
+			var sidebar_id = getIdOfParentSidebar( $( this ) );
 			data = { sidebar_id : sidebar_id };
 			parent.jQuery( 'body' ).trigger( 'awr-add-new-widget' , data );
 			return false;
 		} );
 
 		$( '.awr-delete-widget' ).live( 'click' , function() {
-			var widget_id = get_widget_id( $( this) );
-			var sidebar_id	= get_id_of_parent_sidebar( $( this ) );
+			var widget_id = getWidgetId( $( this) );
+			var sidebar_id	= getIdOfParentSidebar( $( this ) );
 			data = { widget_id : widget_id ,
 				sidebar_id : sidebar_id };
 			parent.jQuery( 'body' ).trigger( 'awr-delete-widget' , data );
@@ -184,22 +204,21 @@
 			$( this ).parents( '.widget' ).fadeOut( 500 , function() {
 				$( this ).detach();
 				assignBootstrapClassesToWidgets();
-				awrUtility.manage_amounts_of_widgets_and_rows();
+				awrUtility.manageAmountsOfWidgetsAndRows();
 			} );
 			return false;
 		} );
 
-		function is_entire_page_done_saving() {
-			return $( '#save' , window.parent.document ).attr( 'disabled' ) === 'disabled';
+		/* End DOM event handlers for buttons above every widget */
+
+		widgetInCustomizerControls = getWidgetThatIsOpenInCustomizerControls();
+
+		if ( widgetInCustomizerControls ) {
+			scrollToTopOfIframe( widgetInCustomizerControls );
 		}
 
-		function get_widget_id( $element ) {
-			return $element.parents( '.widget' ).attr( 'id' );
-		}
+		sortableSidebarSetup( sidebar_selector );
 
-		function get_id_of_parent_sidebar( $element ) {
-			return $element.parents( '.awr-row' ).attr( 'id' );
-		}
 
 	} );
 } )( jQuery );
