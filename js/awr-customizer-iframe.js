@@ -2,7 +2,7 @@
 	$( function() {
 		var remove_title_element_from_widgets , widgetInCustomizerControls ,
 		    getWidgetThatIsOpenInCustomizerControls , scrollToTopOfIframe ,
-		    sortableSidebarSetup , setUpSortableHandle ,
+		    setUpSortableSidebar , setUpSortableHandle ,
 		    makeSidebarWidgetsSortable , assignBootstrapClassesToWidgets ,
 		    getParentSidebarsOfSortableWidgets , getWidgetId ,
 		    getIdOfParentSidebar;
@@ -60,7 +60,7 @@
 			} , 500 );
 		}
 
-		sortableSidebarSetup = function( sidebar_selector ) {
+		setUpSortableSidebar = function( sidebar_selector ) {
 			setUpSortableHandle();
 			makeSidebarWidgetsSortable( sidebar_selector );
 
@@ -217,8 +217,7 @@
 			scrollToTopOfIframe( widgetInCustomizerControls );
 		}
 
-		sortableSidebarSetup( sidebar_selector );
-
+		setUpSortableSidebar( sidebar_selector );
 
 	} );
 } )( jQuery );
