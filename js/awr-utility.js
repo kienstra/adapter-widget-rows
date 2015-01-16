@@ -1,9 +1,15 @@
 var awrUtility =
 ( function( $ ) {
-	var manageAmountsOfWidgetsAndRows, sidebar_selector = '.awr-row';
+	var manageAmountsOfWidgetsAndRows , manageSidebar , hideOrShowButtonToDeleteSidebar ,
+	    hasWidgets , isOnlyOneSidebarOnPage , showButtonToDeleteSidebar ,
+	    setClassBasedOnChildWidgets , setHasChildWidget , setNoChildWidget ,
+	    manageNumberOfSidebarsAndWidgets , setOnlySidebarAndNoWidget ,
+	    setPageHasMultipleSidebarsForWidgets;   
+
+	var sidebar_selector = '.awr-row';
 
 	/* Public function */
-	function manageAmountsOfWidgetsAndRows() {
+	manageAmountsOfWidgetsAndRows = function() {
 		$( sidebar_selector ).map( function() {
 			$sidebar = $( this );
 			manageSidebar( $sidebar );
@@ -11,13 +17,13 @@ var awrUtility =
 	}
 
 	/* Private functions */
-	function manageSidebar( $sidebar ) {
+	manageSidebar = function( $sidebar ) {
 		hideOrShowButtonToDeleteSidebar( $sidebar );
 		setClassBasedOnChildWidgets( $sidebar );
 		manageNumberOfSidebarsAndWidgets( $sidebar );
 	}
 
-	function hideOrShowButtonToDeleteSidebar( $sidebar ) {
+	hideOrShowButtonToDeleteSidebar = function( $sidebar ) {
 		if ( hasWidgets( $sidebar ) && ( isOnlyOneSidebarOnPage() ) ) {
 			hideButtonToDeleteSidebar();
 		}
@@ -26,25 +32,25 @@ var awrUtility =
 		}
 	}
 
-	function hasWidgets( $sidebar ) {
+	hasWidgets = function( $sidebar ) {
 		if ( $sidebar.children( '.widget' ) ) {
 			return ( $sidebar.children( '.widget' ).length > 0 );
 		}
 	}
 
-	function isOnlyOneSidebarOnPage() {
+	isOnlyOneSidebarOnPage = function() {
 		return ( $( sidebar_selector ).length === 1 );
 	}
 
-	function hideButtonToDeleteSidebar() {
+	hideButtonToDeleteSidebar = function() {
 		$( '.awr-delete-sidebar' ).css( 'display' , 'none' );
 	}
 
-	function showButtonToDeleteSidebar() {
+	showButtonToDeleteSidebar = function() {
 		$( '.awr-delete-sidebar' ).show();
 	}
 
-	function setClassBasedOnChildWidgets( $sidebar ) {
+	setClassBasedOnChildWidgets = function( $sidebar ) {
 		if ( hasWidgets( $sidebar ) ) {
 			setHasChildWidget( $sidebar );
 		}
@@ -53,15 +59,15 @@ var awrUtility =
 		}
 	}
 
-	function setHasChildWidget( $sidebar ) {
+	setHasChildWidget = function( $sidebar ) {
 		$sidebar.removeClass( 'awr-empty' );
 	}
 
-	function setNoChildWidget( $sidebar ) {
+	setNoChildWidget = function( $sidebar ) {
 		$sidebar.addClass( 'awr-empty' );
 	}
 
-	function manageNumberOfSidebarsAndWidgets( $sidebar ) {
+	manageNumberOfSidebarsAndWidgets = function( $sidebar ) {
 		if ( ( ! hasWidgets( $sidebar ) ) && ( isOnlyOneSidebarOnPage() ) ) {
 			setOnlySidebarAndNoWidget( $sidebar );
 		}
@@ -70,12 +76,13 @@ var awrUtility =
 		}
 	}
 
-	function setOnlySidebarAndNoWidget( $sidebar ) {
+	setOnlySidebarAndNoWidget = function( $sidebar ) {
 		$sidebar.addClass( 'awr-only-sidebar' );
 		$sidebar.find( '.awr-popover-add-new' ).click();
+		console.log( 'correct' );
 	}
 
-	function setPageHasMultipleSidebarsForWidgets( $sidebar ) {
+	setPageHasMultipleSidebarsForWidgets = function( $sidebar ) {
 		$sidebar.removeClass( 'awr-only-sidebar' );
 	}
 

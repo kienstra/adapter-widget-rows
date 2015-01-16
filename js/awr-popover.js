@@ -2,16 +2,20 @@
 	$( function()	{
 		var popover_selector = '.awr-popover';
 
-		/* Sets up popovers at top of rows */
+		/*
+		 * Sets up popovers at top of rows
+		 */
 		$( popover_selector ).popover(
-			{	html			: true ,
-				placement : 'bottom' ,
-				title		 : '' ,
-				animation : false ,
-				content	 : function() {
-					return $( this ).next().html();
-			}
-		} );
+			{
+			  html	    : true ,
+			  placement : 'bottom' ,
+			  title	    : '' ,
+			  animation : false ,
+			  content   : function() {
+				            return $( this ).next().html();
+			            }
+		        }
+		);
 
 		// when a popover is shown, hide all other popovers
 		$( popover_selector ).on( 'show.bs.popover' , function() {
@@ -25,7 +29,7 @@
 			popover_anchor.popover( 'hide' );
 		} );
 
-		awrUtility.manage_amounts_of_widgets_and_rows();
+		awrUtility.manageAmountsOfWidgetsAndRows();
 
 	} );
 } )( jQuery );
