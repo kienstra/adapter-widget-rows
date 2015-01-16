@@ -19,9 +19,9 @@
 		// Reorders widgets in customizer controls to match the new order
 		$( 'body' ).bind( 'awr-reorder-widgets' , function( event , data ) {
 			var sidebar_id_with_underscores = data.sidebar_id ,
-			  sidebar_id = sidebar_id_with_underscores.replace( /_/g , '-' ) ,
-			  order = data.sortable_order ,
-			  parent_sidebar_of_each_widget = data.parent_sidebars;
+			    sidebar_id = sidebar_id_with_underscores.replace( /_/g , '-' ) ,
+			    order = data.sortable_order ,
+			    parent_sidebar_of_each_widget = data.parent_sidebars;
 
 			reorder_customize_controls_sidebar_widgets( sidebar_id , order );
 
@@ -278,8 +278,7 @@
 				$customize_controls_sidebar.find( '.accordion-section-title' ).click();
 				$customize_controls_sidebar.find( '.add-new-widget' ).click();
 				scroll_sidebar_to_top_of_controls( sidebar_id );
-		}, 300
-			);
+		        }, 300 );
 			return false;
 		}
 

@@ -1,7 +1,6 @@
 ( function( $ ) {
 	$( function()	{
-		var sidebar_selector = '.awr-row' ,
-		    popover_selector = '.awr-popover';
+		var popover_selector = '.awr-popover';
 
 		/* Sets up popovers at top of rows */
 		$( popover_selector ).popover(
@@ -27,10 +26,6 @@
 		} );
 
 		awrUtility.manage_amounts_of_widgets_and_rows();
-
-		function is_in_iframe() {
-			return parent.length > 0;
-		}
 
 	} );
 } )( jQuery );
