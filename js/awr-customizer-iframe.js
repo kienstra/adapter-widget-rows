@@ -5,7 +5,7 @@
 		    setUpSortableSidebar , setUpSortableHandle ,
 		    makeSidebarWidgetsSortable , assignBootstrapClassesToWidgets ,
 		    getParentSidebarsOfSortableWidgets , getWidgetId ,
-		    getIdOfParentSidebar;
+		    getIdOfParentSidebar ;
 
 		var sidebar_selector = '.awr-row' ,
 		    sortable_handle = '.awr-edit-controls';
