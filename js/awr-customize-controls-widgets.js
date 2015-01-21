@@ -18,31 +18,16 @@
 		// Customizer iframe triggers this on sortupdate ( when sorting of widgets has changed )
 		// Reorders widgets in customizer controls to match the new order
 		$( 'body' ).bind( 'awr-reorder-widgets' , function( event , data ) {
+			var reorderCustomizeControlsSidebarWidgets ,
+			    sidebarHasWidgetFromOtherSidebar , triggerIframeReassignIds;
+
 			var sidebar_id_with_underscores = data.sidebar_id ,
 			    sidebar_id = sidebar_id_with_underscores.replace( /_/g , '-' ) ,
 			    order = data.sortable_order ,
 			    parent_sidebar_of_each_widget = data.parent_sidebars;
 
-			reorder_customize_controls_sidebar_widgets( sidebar_id , order );
 
-			function reorder_customize_controls_sidebar_widgets( sidebar_id , order ) {
-				var $sidebar_accordion_section = getSidebarAccordionSection( sidebar_id );
-				var $widgets_in_sidebar = $sidebar_accordion_section.find( '.customize-control-widget_form' );
-				if ( $widgets_in_sidebar.length !== order.length ) {
-					return false; // there's been a deletion or addition, no need to reorder widgets
-				} else if ( sidebar_has_widget_from_other_sidebar() ) {
-					triggerIframeReassignIds(); // no reorder needed, but assign parent ids to all widgets
-					return false;
-				} else {
-					var $last_li_in_sidebar = $sidebar_accordion_section.find( 'li' ).last();
-					$widgets_in_sidebar.awrInsertInGivenOrderBeforeElement( order , $last_li_in_sidebar );
-					addClassesToFirstAndLastWidgetsIn( $sidebar_accordion_section );
-					triggerIframeReassignIds();
-					triggerSortUpdateFor( sidebar_id );
-				}
-			}
-
-			function sidebar_has_widget_from_other_sidebar() {
+			sidebarHasWidgetFromOtherSidebar = function() {
 				parent_sidebar_of_each_widget.map( function( parent_sidebar , index ) {
 					if ( parent_sidebar !== sidebar_id ) {
 						return true;
@@ -50,9 +35,31 @@
 				} );
 			}
 
-			function triggerIframeReassignIds() {
+			triggerIframeReassignIds =  function() {
 				$( 'body' ).trigger( 'awr-reassign-identifiers' , { sidebar_id : sidebar_id } );
 			}
+
+
+			reorderCustomizeControlsSidebarWidgets = function( sidebar_id , order ) {
+				var $sidebarAccordionSection , $last_li_in_sidebar;
+
+				$sidebarAccordionSection = getSidebarAccordionSection( sidebar_id ) ,
+				    $widgets_in_sidebar = $sidebarAccordionSection.find( '.customize-control-widget_form' );
+				if ( $widgets_in_sidebar.length !== order.length ) {
+					return false; // there's been a deletion or addition, no need to reorder widgets
+				} else if ( sidebarHasWidgetFromOtherSidebar() ) {
+					triggerIframeReassignIds(); // no reorder needed, but assign parent ids to all widgets
+					return false;
+				} else {
+					$last_li_in_sidebar = $sidebarAccordionSection.find( 'li' ).last();
+					$widgets_in_sidebar.awrInsertInGivenOrderBeforeElement( order , $last_li_in_sidebar );
+					addClassesToFirstAndLastWidgetsIn( $sidebarAccordionSection );
+					triggerIframeReassignIds();
+					triggerSortUpdateFor( sidebar_id );
+				}
+			}
+
+			reorderCustomizeControlsSidebarWidgets( sidebar_id , order );
 
 		} ); /*	End $( 'body' ).bind( 'awr-reorder-widgets'	*/
 
@@ -116,8 +123,8 @@
 			return $( '#accordion-section-sidebar-widgets-' + sidebar_id + ' .accordion-section-content' );
 		}
 
-		function addClassesToFirstAndLastWidgetsIn( $sidebar_accordion_section ) {
-			var widgets = $sidebar_accordion_section.find( '.customize-control-widget_form' );
+		function addClassesToFirstAndLastWidgetsIn( $sidebarAccordionSection ) {
+			var widgets = $sidebarAccordionSection.find( '.customize-control-widget_form' );
 			widgets.map( function() {
 				$( this ).removeClass( 'first-widget' ).removeClass( 'last-widget' );
 			} );
@@ -145,7 +152,7 @@
 				open_wle_accordion_section( wle_target );
 			}
 			else if ( awr_new ) {
-				open_new_widget_panel_for_sidebar( awr_new );
+				openNewWidgetPanelForSidebar( awr_new );
 			}
 			else if ( awr_delete && awr_widget ) {
 				delete_widget_from_customizer_controls( awr_widget , awr_delete );
@@ -221,9 +228,9 @@
 		}
 
 		function open_sidebar_accordion_section( sidebar_id ) {
-			var $sidebar_accordion_section = get_customize_controls_sidebar( sidebar_id );
-			if ( ! $sidebar_accordion_section.hasClass( 'open' ) ) {
-				$sidebar_accordion_section.find( '.accordion-section-title' ).click();
+			var $sidebarAccordionSection = get_customize_controls_sidebar( sidebar_id );
+			if ( ! $sidebarAccordionSection.hasClass( 'open' ) ) {
+				$sidebarAccordionSection.find( '.accordion-section-title' ).click();
 			}
 		}
 
@@ -260,25 +267,24 @@
 		}
 
 		$( 'body' ).bind( 'awr-add-new-widget' , function( event , data ) {
-			var sidebar_id = data.sidebar_id;
-			open_new_widget_panel_for_sidebar( sidebar_id );
+			openNewWidgetPanelForSidebar( data.sidebar_id );
 		} );
 
 		$( 'body' ).bind( 'awr-open-widget-control' , function( event , data ) {
-			var widget_id = data.widget_id;
-			var sidebar_id = data.sidebar_id;
+			var widget_id = data.widget_id,
+			    sidebar_id = data.sidebar_id;
 			open_widget_customizer_control( sidebar_id , widget_id );
 		} );
 
 
-		function open_new_widget_panel_for_sidebar( sidebar_id ) {
+		function openNewWidgetPanelForSidebar( sidebar_id ) {
 			open_panel( 'widgets' );
 			$customize_controls_sidebar = get_customize_controls_sidebar( sidebar_id );
 			setTimeout( function() {
 				$customize_controls_sidebar.find( '.accordion-section-title' ).click();
 				$customize_controls_sidebar.find( '.add-new-widget' ).click();
 				scroll_sidebar_to_top_of_controls( sidebar_id );
-		        }, 300 );
+			}, 300 );
 			return false;
 		}
 
@@ -291,8 +297,8 @@
 		}
 
 		function after_delete_widget_from( sidebar_id ) {
-			$sidebar_accordion_section = getSidebarAccordionSection( sidebar_id );
-			addClassesToFirstAndLastWidgetsIn( $sidebar_accordion_section );
+			var $sidebarAccordionSection = getSidebarAccordionSection( sidebar_id );
+			addClassesToFirstAndLastWidgetsIn( $sidebarAccordionSection );
 			triggerSortUpdateFor( sidebar_id );
 		}
 
