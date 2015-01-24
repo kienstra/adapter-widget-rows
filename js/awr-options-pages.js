@@ -25,7 +25,7 @@
 			$new_page_delete_button = get_new_page_delete_button() ,
 			$break_tags = $( '</br></br>' );
 
-			[ $new_page_delete_button , $new_page_input , $break_tags	].map( function( element , index ) {
+			[ $new_page_delete_button , $new_page_input , $break_tags ].map( function( element , index ) {
 				element.insertAfter( $element_before_new_button );
 			} );
 

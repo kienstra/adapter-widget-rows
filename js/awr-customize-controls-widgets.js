@@ -62,7 +62,7 @@
 		 }
 
 		openWidgetCustomizerControl = function( sidebar_id , widget_id ) {
-			var interval , scrollInterval;
+			var scrollInterval , interval;
 			if ( widget_id.match( /wle-[\d]{1,3}/ ) ) {
 				openWleAccordionSection( widget_id );
 				return;
@@ -309,8 +309,8 @@
 		} ); /* End $( 'body' ).bind( 'awr-remove-and-insert-widget'	*/
 
 		$( 'body' ).bind( 'awr-delete-widget' , function( event , data ) {
-			var widget_id = data.widget_id;
-			var sidebar_id = data.sidebar_id;
+			var widget_id = data.widget_id ,
+			    sidebar_id = data.sidebar_id;
 			deleteWidgetFromCustomizerControls( widget_id , sidebar_id );
 		} );
 
@@ -319,7 +319,7 @@
 		} );
 
 		$( 'body' ).bind( 'awr-open-widget-control' , function( event , data ) {
-			var widget_id = data.widget_id,
+			var widget_id = data.widget_id ,
 			    sidebar_id = data.sidebar_id;
 			openWidgetCustomizerControl( sidebar_id , widget_id );
 		} );
