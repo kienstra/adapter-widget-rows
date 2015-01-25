@@ -1,5 +1,4 @@
-var awrUtility =
-( function( $ ) {
+var awrUtility = ( function( $ ) {
 	var manageAmountsOfWidgetsAndRows , manageSidebar , hideOrShowButtonToDeleteSidebar ,
 	    hasWidgets , isOnlyOneSidebarOnPage , showButtonToDeleteSidebar ,
 	    setClassBasedOnChildWidgets , setHasChildWidget , setNoChildWidget ,
