@@ -4,9 +4,8 @@ var awrUtility =
 	    hasWidgets , isOnlyOneSidebarOnPage , showButtonToDeleteSidebar ,
 	    setClassBasedOnChildWidgets , setHasChildWidget , setNoChildWidget ,
 	    manageNumberOfSidebarsAndWidgets , setOnlySidebarAndNoWidget ,
-	    setPageHasMultipleSidebarsForWidgets;   
-
-	var sidebar_selector = '.awr-row';
+	    setPageHasMultipleSidebarsForWidgets ,
+	    sidebar_selector = '.awr-row';
 
 	/* Public function */
 	manageAmountsOfWidgetsAndRows = function() {
@@ -16,7 +15,7 @@ var awrUtility =
 		} );
 	}
 
-	/* Private functions */
+	/* Begin private functions */
 	manageSidebar = function( $sidebar ) {
 		hideOrShowButtonToDeleteSidebar( $sidebar );
 		setClassBasedOnChildWidgets( $sidebar );
@@ -79,13 +78,13 @@ var awrUtility =
 	setOnlySidebarAndNoWidget = function( $sidebar ) {
 		$sidebar.addClass( 'awr-only-sidebar' );
 		$sidebar.find( '.awr-popover-add-new' ).click();
-		console.log( 'correct' );
 	}
 
 	setPageHasMultipleSidebarsForWidgets = function( $sidebar ) {
 		$sidebar.removeClass( 'awr-only-sidebar' );
 	}
-
+	/* End private functions */
+	
 	return { manageAmountsOfWidgetsAndRows : manageAmountsOfWidgetsAndRows };
 
 } )( jQuery );
