@@ -162,7 +162,7 @@
 			awrUtility.manageAmountsOfWidgetsAndRows();
 
 			data = {
-				sidebarId	: sidebar_id ,
+				sidebarId	: sidebarId ,
 				parent_sidebars : parent_sidebar_of_each_widget ,
 				sortable_order	: sortable_order ,
 			       };
@@ -174,8 +174,8 @@
 		} );
 
 		parent.jQuery( 'body' ).bind( 'awr-reassign-identifiers' , function( event , data ) {
-			var sidebar_id = data.sidebarId;
-			$( '#' + sidebar_id ).assignIdentifiersToSortableWidgets();
+			var sidebarId = data.sidebarId;
+			$( '#' + sidebarId ).assignIdentifiersToSortableWidgets();
 		} );
 
 		/* End DOM event handlers for jQuery sortable API */
@@ -192,18 +192,18 @@
 		} );
 
 		$( '.awr-add-new-widget' ).live( 'click' , function() {
-			var sidebar_id = getIdOfParentSidebar( $( this ) ) ,
-			    data = { sidebarId : sidebar_id };
+			var sidebarId = getIdOfParentSidebar( $( this ) ) ,
+			    data = { sidebarId : sidebarId };
 			parent.jQuery( 'body' ).trigger( 'awr-add-new-widget' , data );
 			return false;
 		} );
 
 		$( '.awr-delete-widget' ).live( 'click' , function() {
 			var widget_id = getWidgetId( $( this) ) ,
-			    sidebar_id	= getIdOfParentSidebar( $( this ) ) ,
+			    sidebarId	= getIdOfParentSidebar( $( this ) ) ,
 			    data = {
 				    widget_id : widget_id ,
-				    sidebarId : sidebar_id
+				    sidebarId : sidebarId
 				   };
 
 			parent.jQuery( 'body' ).trigger( 'awr-delete-widget' , data );
