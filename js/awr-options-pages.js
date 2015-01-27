@@ -19,12 +19,14 @@
 
 		// Link to create new page
 		$( '.awr-new-page' ).on( 'click' , function() {
-			var setElementBeforeNewButton , getNewPageNumber ,
-			    setNewPageInput , getNewPageDeleteButton ,
-			    $elementBeforeNewButton , newPageNumber , newPageInputId ,
-			    $newPageInput , $newPageDeleteButton , $breakTags,
+			var setElementBeforeNewButton , setNewPageNumber ,
+			    setIdNewPageInput , setNewPageInput , setNewPageDeleteButton ,
+			    $elementBeforeNewButton , newPageNumber , idNewPageInput ,
+			    $newPageInput , $newPageDeleteButton , $breakTags ,
+			    createNewPageFields , insertFieldsIntoPage ,
 			    $awrPages = $( '.awr-page-input' ) ,
-			    $lastPageInput = $awrPages.last();
+			    $lastPageInput = $awrPages.last() ,
+			    $breakTags = $( '</br></br>' );
 
 			setElementBeforeNewButton = function() {
 				if ( $lastPageInput.length === 0 ) {
@@ -47,37 +49,47 @@
 				}
 			}
 
+			setIdNewPageInput = function() {
+				idNewPageInput = 'awr-page-' + newPageNumber;
+			}
+
 			setNewPageInput = function() {
 				$newPageInput = $( '<input>' ).attr( {
 					type  : 'text' ,
-					id    : newPageInputId ,
+					id    : idNewPageInput ,
 					class : 'awr-page-input' ,
 					value : '' ,
 					name  : 'map_awr_index_to_page_title[' + newPageNumber + ']'
 				} );
 			}
 
-			getNewPageDeleteButton = function() {
-				return $( '<a>' )
+			setNewPageDeleteButton = function() {
+				$newPageDeleteButton = $( '<a>' )
 					.attr( {
 						href  : '#' ,
 						class : 'button-secondary awr-delete-page' ,
 					       }
 					     )
-					.data( 'awr-target' , newPageInputId )
+					.data( 'awr-target' , idNewPageInput )
 					.html( 'Delete' );
 			}
 
-			setElementBeforeNewButton();
-			newPageNumber = getNewPageNumber();
-			newPageInputId = 'awr-page-' + newPageNumber;
-			setNewPageInput();
-			$newPageDeleteButton = getNewPageDeleteButton();
-			$breakTags = $( '</br></br>' );
+			createNewPageFields = function() {
+				setElementBeforeNewButton();
+				setNewPageNumber();
+				setIdNewPageInput();
+				setNewPageInput();
+				setNewPageDeleteButton();
+			}
 
-			[ $newPageDeleteButton , $newPageInput , $breakTags ].map( function( element , index ) {
+			insertFieldsIntoPage = function() {
+				[ $newPageDeleteButton , $newPageInput , $breakTags ].map( function( element , index ) {
 				element.insertAfter( $elementBeforeNewButton );
-			} );
+				} );
+			}
+
+			createNewPageFields();
+			insertFieldsIntoPage();
 
 			return false;
 
