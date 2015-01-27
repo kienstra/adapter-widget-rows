@@ -11,9 +11,9 @@
 			  title	    : '' ,
 			  animation : false ,
 			  content   : function() {
-				            return $( this ).next().html();
-			            }
-		        }
+					    return $( this ).next().html();
+				    }
+			}
 		);
 
 		// when a popover is shown, hide all other popovers
