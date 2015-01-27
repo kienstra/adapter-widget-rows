@@ -248,11 +248,12 @@
 		} ); /*	End $( 'body' ).bind( 'awr-reorder-widgets'	*/
 
 		$( 'body' ).bind( 'awr-remove-and-insert-widget' , function( event , data ) {
+			console.log( data );
 			var getOrdinalOfWidgetFromDifferentSidebar ,
 			    getIdOfWidgetFromDifferentSidebar ,
 			    getParentSidebarOfWidgetFromDifferentSidebar ,
 			    getWidgetFromDifferentSidebar ,
-			    sidebarIdWithUnderscores = data.sidebar_id ,
+			    sidebarIdWithUnderscores = data.sidebarId ,
 			    sidebar_id = sidebarIdWithUnderscores.replace( /_/g , '-' ) ,
 			    order = data.sortable_order ,
 			    parent_sidebars = data.parent_sidebars ;
@@ -310,17 +311,17 @@
 
 		$( 'body' ).bind( 'awr-delete-widget' , function( event , data ) {
 			var widget_id = data.widget_id ,
-			    sidebar_id = data.sidebar_id;
+			    sidebar_id = data.sidebarId;
 			deleteWidgetFromCustomizerControls( widget_id , sidebar_id );
 		} );
 
 		$( 'body' ).bind( 'awr-add-new-widget' , function( event , data ) {
-			openNewWidgetPanelForSidebar( data.sidebar_id );
+			openNewWidgetPanelForSidebar( data.sidebarId );
 		} );
 
 		$( 'body' ).bind( 'awr-open-widget-control' , function( event , data ) {
 			var widget_id = data.widget_id ,
-			    sidebar_id = data.sidebar_id;
+			    sidebar_id = data.sidebarId;
 			openWidgetCustomizerControl( sidebar_id , widget_id );
 		} );
 
