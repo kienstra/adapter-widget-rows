@@ -13,40 +13,42 @@
 			pageToDelete.css( 'display' , 'none' )
 				    .val( '' );
 			$( this ).css( 'display' , 'none' );
+
 			return false;
 		} );
 
 		// Link to create new page
 		$( '.awr-new-page' ).on( 'click' , function() {
-			var getElementBeforeNewButton , getNewPageNumber ,
-			    getNewPageInput , getNewPageDeleteButton ,
+			var setElementBeforeNewButton , getNewPageNumber ,
+			    setNewPageInput , getNewPageDeleteButton ,
 			    $elementBeforeNewButton , newPageNumber , newPageInputId ,
 			    $newPageInput , $newPageDeleteButton , $breakTags,
 			    $awrPages = $( '.awr-page-input' ) ,
 			    $lastPageInput = $awrPages.last();
 
-			getElementBeforeNewButton = function() {
+			setElementBeforeNewButton = function() {
 				if ( $lastPageInput.length === 0 ) {
-					return $( '.awr-options-form .form-table td' );
+					$elementBeforeNewButton = $( '.awr-options-form .form-table td' );
 				}
 				else {
-					return $lastPageInput.next();
+					$elementBeforeNewButton = $lastPageInput.next();
 				}
 			}
 
-			getNewPageNumber = function() {
+			setNewPageNumber = function() {
+				var lastPageId , lastPageNumber ;
+
 				if ( $lastPageInput.length === 0 ) {
-					return 1;
-				}
-				else {
-					var last_page_id = $lastPageInput.attr( 'id' );
-					var last_page_number = Number( last_page_id.match( /awr-page-([\d]*)/ )[ 1 ] );
-					return last_page_number + 1;
+					newPageNumber = 1;
+				} else {
+					lastPageId = $lastPageInput.attr( 'id' );
+					lastPageNumber = Number( lastPageId.match( /awr-page-([\d]*)/ )[ 1 ] );
+					newPageNumber = lastPageNumber + 1;
 				}
 			}
 
-			getNewPageInput = function() {
-				return $( '<input>' ).attr( {
+			setNewPageInput = function() {
+				$newPageInput = $( '<input>' ).attr( {
 					type  : 'text' ,
 					id    : newPageInputId ,
 					class : 'awr-page-input' ,
@@ -66,10 +68,10 @@
 					.html( 'Delete' );
 			}
 
-			$elementBeforeNewButton = getElementBeforeNewButton();
+			setElementBeforeNewButton();
 			newPageNumber = getNewPageNumber();
 			newPageInputId = 'awr-page-' + newPageNumber;
-			$newPageInput = getNewPageInput();
+			setNewPageInput();
 			$newPageDeleteButton = getNewPageDeleteButton();
 			$breakTags = $( '</br></br>' );
 
