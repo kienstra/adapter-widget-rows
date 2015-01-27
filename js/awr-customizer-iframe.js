@@ -5,17 +5,17 @@
 		    setUpSortableSidebar , setUpSortableHandle ,
 		    makeSidebarWidgetsSortable , assignBootstrapClassesToWidgets ,
 		    getParentSidebarsOfSortableWidgets , getWidgetId ,
-		    getIdOfParentSidebar ;
-
-		var sidebar_selector = '.awr-row' ,
+		    getIdOfParentSidebar ,
+		    sidebar_selector = '.awr-row' ,
 		    sortable_handle = '.awr-edit-controls';
 
 		/*
 		 * jQuery plugin to give names to sortable widgets
 		 */
 		$.fn.assignIdentifiersToSortableWidgets = function() {
-			sidebar_id = $( this ).attr( 'id' );
-			$widget_children = $( this ).children( '.widget' );
+			var sidebar_id = $( this ).attr( 'id' ) , 
+			    $widget_children = $( this ).children( '.widget' );
+			
 			if ( $widget_children.length > 0 ) {
 				$widget_children.map( function() {
 					$( this ).data( 'awr-parent-sidebar' , sidebar_id );
@@ -31,32 +31,36 @@
 		};
 
 		getWidgetThatIsOpenInCustomizerControls = function() {
-			var $open_accordion_section = $( '.open' , window.parent.document );
-			if ( ! $open_accordion_section.length ) {
-				return false;
+			var idOfOpenSection , wleWidgetRegex , generalWidgetRegex , awrRegex ,
+			    $openAccordionSection = $( '.open' , window.parent.document );
+			if ( ! $openAccordionSection.length ) {
+				return false; // there's no widget open in customizer controls
 			}
-			var id_of_open_section = $open_accordion_section.attr( 'id' ) ,
-			    wle_widget_regex = /wle-[\d]{1,3}/ ,
-			    general_widget_regex = /customize-control-widget_([^\n]*)/ ,
-			    awr_regex = /awr-[\d]{1,5}-[\d]{1,5}/;
 
-			if ( id_of_open_section.match( wle_widget_regex ) ) {
-				return id_of_open_section.match( wle_widget_regex );
+			idOfOpenSection = $openAccordionSection.attr( 'id' );
+			wleWidgetRegex = /wle-[\d]{1,3}/;
+			generalWidgetRegex = /customize-control-widget_([^\n]*)/;
+			awrRegex = /awr-[\d]{1,5}-[\d]{1,5}/;
+
+			if ( idOfOpenSection.match( wleWidgetRegex ) ) {
+				return idOfOpenSection.match( wleWidgetRegex );
 			}
-			else if ( $open_accordion_section.attr( 'id' ).match( awr_regex ) ) {
-				return $open_accordion_section.attr( 'id' ).match( awr_regex );
+			else if ( $openAccordionSection.attr( 'id' ).match( awrRegex ) ) {
+				return $openAccordionSection.attr( 'id' ).match( awrRegex );
 			}
 		}
 
 		scrollToTopOfIframe = function( element_id ) {
-			var $iframe_body = $( 'html, body' ),
+			var scrollTopValue ,
+			    $iframe_body = $( 'html, body' ) ,
 			    $el = $iframe_body.find( '#' + element_id );
+			
 			if ( ! $el.length ) {
 				return false;
 			}
-			var scrollTop_value = ( $el.offset().top > 25 ) ? ( $el.offset().top - 25 ) : ( $el.offset().top );
+			scrollTopValue = ( $el.offset().top > 25 ) ? ( $el.offset().top - 25 ) : ( $el.offset().top );
 			$iframe_body.animate( {
-				scrollTop : scrollTop_value
+				scrollTop : scrollTopValue
 			} , 500 );
 		}
 
