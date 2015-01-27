@@ -17,13 +17,13 @@
 		// Link to create new page
 		$( '.awr-new-page' ).on( 'click' , function() {
 			var $awr_pages = $( '.awr-page-input' ) ,
-			$last_page_input = $awr_pages.last() ,
-			$element_before_new_button = get_element_before_new_button() ,
-			new_page_number = get_new_page_number() ,
-			new_page_input_id = 'awr-page-' + new_page_number ,
-			$new_page_input = get_new_page_input() ,
-			$new_page_delete_button = get_new_page_delete_button() ,
-			$break_tags = $( '</br></br>' );
+			    $last_page_input = $awr_pages.last() ,
+			    $element_before_new_button = get_element_before_new_button() ,
+			    new_page_number = get_new_page_number() ,
+			    new_page_input_id = 'awr-page-' + new_page_number ,
+			    $new_page_input = get_new_page_input() ,
+			    $new_page_delete_button = get_new_page_delete_button() ,
+			    $break_tags = $( '</br></br>' );
 
 			[ $new_page_delete_button , $new_page_input , $break_tags ].map( function( element , index ) {
 				element.insertAfter( $element_before_new_button );
