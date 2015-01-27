@@ -22,8 +22,8 @@
 			var setElementBeforeNewButton , setNewPageNumber ,
 			    setIdNewPageInput , setNewPageInput , setNewPageDeleteButton ,
 			    $elementBeforeNewButton , newPageNumber , idNewPageInput ,
-			    $newPageInput , $newPageDeleteButton , $breakTags ,
-			    createNewPageFields , insertFieldsIntoPage ,
+			    $newPageInput , $newPageDeleteButton , createNewPageFields ,
+			    insertFieldsIntoPage ,
 			    $awrPages = $( '.awr-page-input' ) ,
 			    $lastPageInput = $awrPages.last() ,
 			    $breakTags = $( '</br></br>' );
@@ -35,7 +35,7 @@
 				else {
 					$elementBeforeNewButton = $lastPageInput.next();
 				}
-			}
+			};
 
 			setNewPageNumber = function() {
 				var lastPageId , lastPageNumber ;
@@ -47,11 +47,11 @@
 					lastPageNumber = Number( lastPageId.match( /awr-page-([\d]*)/ )[ 1 ] );
 					newPageNumber = lastPageNumber + 1;
 				}
-			}
+			};
 
 			setIdNewPageInput = function() {
 				idNewPageInput = 'awr-page-' + newPageNumber;
-			}
+			};
 
 			setNewPageInput = function() {
 				$newPageInput = $( '<input>' ).attr( {
@@ -61,7 +61,7 @@
 					value : '' ,
 					name  : 'map_awr_index_to_page_title[' + newPageNumber + ']'
 				} );
-			}
+			};
 
 			setNewPageDeleteButton = function() {
 				$newPageDeleteButton = $( '<a>' )
@@ -72,7 +72,7 @@
 					     )
 					.data( 'awr-target' , idNewPageInput )
 					.html( 'Delete' );
-			}
+			};
 
 			createNewPageFields = function() {
 				setElementBeforeNewButton();
@@ -80,13 +80,13 @@
 				setIdNewPageInput();
 				setNewPageInput();
 				setNewPageDeleteButton();
-			}
+			};
 
 			insertFieldsIntoPage = function() {
 				[ $newPageDeleteButton , $newPageInput , $breakTags ].map( function( element , index ) {
 				element.insertAfter( $elementBeforeNewButton );
 				} );
-			}
+			};
 
 			createNewPageFields();
 			insertFieldsIntoPage();
