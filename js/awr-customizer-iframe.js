@@ -7,28 +7,13 @@
 		    getIdOfParentSidebar ,
 		    sidebar_selector = '.awr-row' ,
 		    sortable_handle = '.awr-edit-controls';
-
-		/*
-		 * jQuery plugin to give names to sortable widgets
-		 */
-		$.fn.assignIdentifiersToSortableWidgets = function() {
-			var sidebar_id = $( this ).attr( 'id' ) ,
-			    $widget_children = $( this ).children( '.widget' );
-
-			if ( $widget_children.length > 0 ) {
-				$widget_children.map( function() {
-					$( this ).data( 'awr-parent-sidebar' , sidebar_id );
-				} );
-			}
-			return this;
-		};
-
+		
 		/* Begin private utility functions */
 
 		getWidgetThatIsOpenInCustomizerControls = function() {
 			var idOfOpenSection , wleWidgetRegex , generalWidgetRegex , awrRegex ,
 			    $openAccordionSection = $( '.open' , window.parent.document );
-			
+
 			if ( ! $openAccordionSection.length ) {
 				return false; // there's no widget open in customizer controls
 			}
@@ -86,7 +71,7 @@
 				stop        : function( event , ui ) {} ,
 				receive     : function( event , ui ) {} ,
 				update      : function( event , ui ) {} ,
-				over        : function( event , ui ) {} 
+				over        : function( event , ui ) {}
 			} );
 		};
 
@@ -109,7 +94,7 @@
 				}
 				newColumnClass = columnPrefix + columnSize;
 				$( this ).children( '.widget' ).each( function() {
-					var currentClasses = $( this ).attr( 'class' ),
+					var currentClasses = $( this ).attr( 'class' ) ,
 					    newClasses = currentClasses.replace( /col-md-[\d]+/ , newColumnClass );
 					$( this ).attr( 'class' , newClasses );
 				} );
@@ -119,12 +104,28 @@
 		getParentSidebarsOfSortableWidgets = function( $sortable_widgets_container ) {
 			var sidebars = [];
 			$sortable_widgets_container.children( '.widget' ).each( function() {
-	 sidebars.push( $( this ).data( 'awr-parent-sidebar' ) );
+				sidebars.push( $( this ).data( 'awr-parent-sidebar' ) );
 			} );
 			return sidebars;
 		};
 
 		/* End private utility functions */
+
+		/* Begin jQuery plugin to give names to sortable widgets */
+
+		$.fn.assignIdentifiersToSortableWidgets = function() {
+			var sidebarId = $( this ).attr( 'id' ) ,
+			    $widgetChildren = $( this ).children( '.widget' );
+
+			if ( $widgetChildren.length > 0 ) {
+				$widgetChildren.map( function() {
+					$( this ).data( 'awr-parent-sidebar' , sidebarId );
+				} );
+			}
+			return this;
+		};
+
+		/* End jQuery plugin */
 
 		/* Begin DOM event handlers for jQuery sortable API */
 

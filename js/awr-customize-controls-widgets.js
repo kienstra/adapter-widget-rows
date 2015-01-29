@@ -157,6 +157,7 @@
 		};
 
 		openNewWidgetPanelForSidebar = function( sidebar_id ) {
+			var $customize_controls_sidebar;
 			openPanel( 'widgets' );
 			$customize_controls_sidebar = getCustomizeControlsSidebar( sidebar_id );
 			setTimeout( function() {
@@ -186,11 +187,12 @@
 		/* Begin DOM handlers */
 
 		$.fn.awrInsertInGivenOrderBeforeElement = function( order , element ) {
-			var widgets = [];
+			var widgetId , $elementToInsert ,
+			    widgets = [];
 
 			for ( var index in order ) {
-				widget_id = order[ index ];
-				$elementToInsert = $( this ).filter( '[id=customize-control-widget_' + widget_id + ']' );
+				widgetId = order[ index ];
+				$elementToInsert = $( this ).filter( '[id=customize-control-widget_' + widgetId + ']' );
 				widgets.push( $elementToInsert.detach() );
 			}
 
@@ -207,8 +209,8 @@
 		$( 'body' ).bind( 'awr-reorder-widgets' , function( event , data ) {
 			var sidebarHasWidgetFromOtherSidebar , triggerIframeReassignIds ,
 			    reorderCustomizeControlsSidebarWidgets ,
-			    sidebarIdWithUnderscores = data.sidebar_id ,
-			    sidebar_id = sidebarIdWithUnderscores.replace( /_/g , '-' ) ,
+			    sidebarIdWithUnderscores = data.sidebarId ,
+			    sidebarId = sidebarIdWithUnderscores.replace( /_/g , '-' ) ,
 			    order = data.sortable_order ,
 			    parent_sidebar_of_each_widget = data.parent_sidebars;
 
@@ -243,7 +245,7 @@
 				}
 			}; /* end of function reorderCustomizeControlsSidebarWidgets */
 
-			reorderCustomizeControlsSidebarWidgets( sidebar_id , order );
+			reorderCustomizeControlsSidebarWidgets( sidebarId , order );
 
 		} ); /*	End $( 'body' ).bind( 'awr-reorder-widgets'	*/
 
