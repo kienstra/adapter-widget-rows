@@ -254,7 +254,6 @@
 		} ); /*	End $( 'body' ).bind( 'awr-reorder-widgets'	*/
 
 		$( 'body' ).bind( 'awr-remove-and-insert-widget' , function( event , data ) {
-			console.log( data );
 			var getOrdinalOfWidgetFromDifferentSidebar ,
 			    getIdOfWidgetFromDifferentSidebar ,
 			    getParentSidebarOfWidgetFromDifferentSidebar ,

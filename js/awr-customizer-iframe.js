@@ -119,7 +119,7 @@
 
 			if ( $widgetChildren.length > 0 ) {
 				$widgetChildren.map( function() {
-					this.data( 'awr-parent-sidebar' , sidebarId );
+					$( this ).data( 'awr-parent-sidebar' , sidebarId );
 				} );
 			}
 			return this;
