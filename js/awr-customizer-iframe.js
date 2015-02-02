@@ -7,7 +7,7 @@
 		    getIdOfParentSidebar ,
 		    sidebar_selector = '.awr-row' ,
 		    sortable_handle = '.awr-edit-controls';
-		
+
 		/* Begin private utility functions */
 
 		getWidgetThatIsOpenInCustomizerControls = function() {
@@ -114,12 +114,12 @@
 		/* Begin jQuery plugin to give names to sortable widgets */
 
 		$.fn.assignIdentifiersToSortableWidgets = function() {
-			var sidebarId = $( this ).attr( 'id' ) ,
-			    $widgetChildren = $( this ).children( '.widget' );
+			var sidebarId = this.attr( 'id' ) ,
+			    $widgetChildren = this.children( '.widget' );
 
 			if ( $widgetChildren.length > 0 ) {
 				$widgetChildren.map( function() {
-					$( this ).data( 'awr-parent-sidebar' , sidebarId );
+					this.data( 'awr-parent-sidebar' , sidebarId );
 				} );
 			}
 			return this;
