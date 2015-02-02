@@ -192,7 +192,7 @@
 
 			for ( index in order ) {
 				widgetId = order[ index ];
-				$elementToInsert = $( this ).filter( '[id=customize-control-widget_' + widgetId + ']' );
+				$elementToInsert = this.filter( '[id=customize-control-widget_' + widgetId + ']' );
 				widgets.push( $elementToInsert.detach() );
 			}
 
