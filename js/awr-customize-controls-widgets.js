@@ -199,6 +199,8 @@
 			widgets.map( function( widget , index ) {
 				widget.insertBefore( element );
 			} );
+
+			return this;
 		};
 
 		/* End jQuery plugin */		
