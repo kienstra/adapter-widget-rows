@@ -1,20 +1,22 @@
 ( function( $ ) {
 	$( function() {
 
-		/* Module-scope variables, including functions */
-		var utils.addClassesToFirstAndLastWidgetsIn ,
-		    triggerSortUpdateFor , manageUriVariables , findQueryVarValue ,
-		    openWidgetCustomizerControl , openWleAccordionSection ,
-		    exitPanelIfNotIn , openAccordionSection , scrollSectionToTopOfControls ,
+		/* Module-scope variables */
+		var openAccordionSection , scrollSectionToTopOfControls ,
 		    scrollElementToTopOfControls , openPanel , openSidebarAccordionSection ,
 		    openWidgetAccordionSection , scrollSidebarToTopOfControls ,
 		    deleteWidgetFromCustomizerControls , ifIsWleWidgetDeletePanel ,
 		    openNewWidgetPanelForSidebar , getCustomizeControlsSidebar ,
-		    getCustomizeControlsWidget , afterDeleteWidgetFrom ,
-		    utils = {};
+		    getCustomizeControlsWidget , afterDeleteWidgetFrom , utils;
 
 
 
+		/*
+		 * Utility function namespace
+		 *
+		 */
+		utils = {};
+		
 		/* Begin module-scope utility functions */
 
 		utils.getSidebarAccordionSection = function( sidebarId ) {
@@ -30,23 +32,23 @@
 			widgets.last().addClass( 'last-widget' );
 		};
 
-		triggerSortUpdateFor = function( sidebarId ) {
+		utils.triggerSortUpdateFor = function( sidebarId ) {
 			var sortable_element = $( '#accordion-section-sidebar-widgets-' + sidebarId + ' .ui-sortable' ).data( 'ui-sortable' );
 			sortable_element._trigger( "update" , null , sortable_element._uiHash( sortable_element ) );
 		};
 
-		manageUriVariables = function() {
-			var awr_edit = findQueryVarValue( 'awr_edit' ) ,
-			    awr_delete = findQueryVarValue( 'awr_delete' ) ,
-			    awr_new = findQueryVarValue( 'awr_new' ) ,
-			    awr_widget = findQueryVarValue( 'awr_widget' ) ,
-			    wle_target = findQueryVarValue( 'wle_target' );
+		utils.manageUriVariables = function() {
+			var awr_edit = utils.findQueryVarValue( 'awr_edit' ) ,
+			    awr_delete = utils.findQueryVarValue( 'awr_delete' ) ,
+			    awr_new = utils.findQueryVarValue( 'awr_new' ) ,
+			    awr_widget = utils.findQueryVarValue( 'awr_widget' ) ,
+			    wle_target = utils.findQueryVarValue( 'wle_target' );
 
 			if ( awr_edit && awr_widget ) {
-				openWidgetCustomizerControl( awr_edit , awr_widget );
+				utils.openWidgetCustomizerControl( awr_edit , awr_widget );
 			}
 			else if ( wle_target ) {
-				openWleAccordionSection( wle_target );
+				utils.openWleAccordionSection( wle_target );
 			}
 			else if ( awr_new ) {
 				openNewWidgetPanelForSidebar( awr_new );
@@ -56,7 +58,7 @@
 			}
 		};
 
-		findQueryVarValue = function( query_var_key ) {
+		utils.findQueryVarValue = function( query_var_key ) {
 			 var href = encodeURI( document.location.href ) ,
 			     query_value = href.match( query_var_key + '=([^&^#]*)' );
 			 if ( query_value && query_value.length > 0 ) {
@@ -64,10 +66,10 @@
 			 }
 		 };
 
-		openWidgetCustomizerControl = function( sidebarId , widget_id ) {
+		utils.openWidgetCustomizerControl = function( sidebarId , widget_id ) {
 			var scrollInterval , interval;
 			if ( widget_id.match( /wle-[\d]{1,3}/ ) ) {
-				openWleAccordionSection( widget_id );
+				utils.openWleAccordionSection( widget_id );
 				return;
 			}
 			openPanel( 'widgets' );
@@ -81,12 +83,12 @@
 			interval = setInterval( scrollInterval , 200 );
 		};
 
-		openWleAccordionSection = function( widget_id ) {
+		utils.openWleAccordionSection = function( widget_id ) {
 			openPanel( 'wle_panel' );
 			openAccordionSection( widget_id );
 		};
 
-		exitPanelIfNotIn = function( panel_title ) {
+		utils.exitPanelIfNotIn = function( panel_title ) {
 			if ( ( $( '.in-sub-panel' ).length > 0 ) && $( '.current-panel' ).attr( 'id' ) !== 'accordion-panel-' + panel_title ) {
 				$( '.control-panel-back' ).click();
 			}
@@ -119,7 +121,7 @@
 
 		openPanel = function( panelName ) {
 			var $panel;
-			exitPanelIfNotIn( panelName );
+			utils.exitPanelIfNotIn( panelName );
 			$panel = $( '#accordion-panel-' + panelName );
 			if ( ! $panel.hasClass( 'current-panel' ) ) {
 				$panel.find( '.accordion-section-title' ).click();
@@ -182,7 +184,7 @@
 		afterDeleteWidgetFrom = function( sidebarId ) {
 			var $sidebarAccordionSection = utils.getSidebarAccordionSection( sidebarId );
 			utils.addClassesToFirstAndLastWidgetsIn( $sidebarAccordionSection );
-			triggerSortUpdateFor( sidebarId );
+			utils.triggerSortUpdateFor( sidebarId );
 		};
 
 		/* End module-scope utility functions */
@@ -250,7 +252,7 @@
 					$widgets_in_sidebar.awrInsertInGivenOrderBeforeElement( order , $last_li_in_sidebar );
 					utils.addClassesToFirstAndLastWidgetsIn( $sidebarAccordionSection );
 					triggerIframeReassignIds();
-					triggerSortUpdateFor( sidebarId );
+					utils.triggerSortUpdateFor( sidebarId );
 				}
 			}; /* end of function reorderCustomizeControlsSidebarWidgets */
 
@@ -313,9 +315,9 @@
 			$widgetFromDifferentSidebar = getWidgetFromDifferentSidebar();
 			$widgetFromDifferentSidebar.insertBefore( getElementToInsertBefore() );
 			utils.addClassesToFirstAndLastWidgetsIn( utils.getSidebarAccordionSection( sidebarId ) );
-			openWidgetCustomizerControl( sidebarId , idOfWidgetFromDifferentSidebar ); // new, need to test
-			triggerSortUpdateFor( sidebarId );
-			triggerSortUpdateFor( parent_sidebar_of_widget_from_different_sidebar );
+			utils.openWidgetCustomizerControl( sidebarId , idOfWidgetFromDifferentSidebar ); // new, need to test
+			utils.triggerSortUpdateFor( sidebarId );
+			utils.triggerSortUpdateFor( parent_sidebar_of_widget_from_different_sidebar );
 
 		} ); /* End $( 'body' ).bind( 'awr-remove-and-insert-widget'	*/
 
@@ -332,12 +334,12 @@
 		$( 'body' ).bind( 'awr-open-widget-control' , function( event , data ) {
 			var widget_id = data.widget_id ,
 			    sidebarId = data.sidebarId;
-			openWidgetCustomizerControl( sidebarId , widget_id );
+			utils.openWidgetCustomizerControl( sidebarId , widget_id );
 		} );
 
 		/* End DOM handlers */
 
-		manageUriVariables();
+		utils.manageUriVariables();
 
 	} );
 } )( jQuery );
