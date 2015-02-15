@@ -2,7 +2,7 @@
 	$( function() {
 
 		/* Module-scope variables, including functions */
-		var getSidebarAccordionSection , addClassesToFirstAndLastWidgetsIn ,
+		var utils.addClassesToFirstAndLastWidgetsIn ,
 		    triggerSortUpdateFor , manageUriVariables , findQueryVarValue ,
 		    openWidgetCustomizerControl , openWleAccordionSection ,
 		    exitPanelIfNotIn , openAccordionSection , scrollSectionToTopOfControls ,
@@ -10,15 +10,18 @@
 		    openWidgetAccordionSection , scrollSidebarToTopOfControls ,
 		    deleteWidgetFromCustomizerControls , ifIsWleWidgetDeletePanel ,
 		    openNewWidgetPanelForSidebar , getCustomizeControlsSidebar ,
-		    getCustomizeControlsWidget , afterDeleteWidgetFrom;
+		    getCustomizeControlsWidget , afterDeleteWidgetFrom ,
+		    utils = {};
+
+
 
 		/* Begin module-scope utility functions */
 
-		getSidebarAccordionSection = function( sidebarId ) {
+		utils.getSidebarAccordionSection = function( sidebarId ) {
 			return $( '#accordion-section-sidebar-widgets-' + sidebarId + ' .accordion-section-content' );
 		};
 
-		addClassesToFirstAndLastWidgetsIn = function( $sidebarAccordionSection ) {
+		utils.addClassesToFirstAndLastWidgetsIn = function( $sidebarAccordionSection ) {
 			var widgets = $sidebarAccordionSection.find( '.customize-control-widget_form' );
 			widgets.map( function() {
 				$( this ).removeClass( 'first-widget' ).removeClass( 'last-widget' );
@@ -177,8 +180,8 @@
 		};
 
 		afterDeleteWidgetFrom = function( sidebarId ) {
-			var $sidebarAccordionSection = getSidebarAccordionSection( sidebarId );
-			addClassesToFirstAndLastWidgetsIn( $sidebarAccordionSection );
+			var $sidebarAccordionSection = utils.getSidebarAccordionSection( sidebarId );
+			utils.addClassesToFirstAndLastWidgetsIn( $sidebarAccordionSection );
 			triggerSortUpdateFor( sidebarId );
 		};
 
@@ -203,7 +206,7 @@
 			return this;
 		};
 
-		/* End jQuery plugin */		
+		/* End jQuery plugin */
 
 		/* Begin DOM handlers */
 
@@ -235,7 +238,7 @@
 
 			reorderCustomizeControlsSidebarWidgets = function( sidebarId , order ) {
 				var $last_li_in_sidebar,
-				    $sidebarAccordionSection = getSidebarAccordionSection( sidebarId ) ,
+				    $sidebarAccordionSection = utils.getSidebarAccordionSection( sidebarId ) ,
 				    $widgets_in_sidebar = $sidebarAccordionSection.find( '.customize-control-widget_form' );
 				if ( $widgets_in_sidebar.length !== order.length ) {
 					return false; // there's been a deletion or addition, no need to reorder widgets
@@ -245,7 +248,7 @@
 				} else {
 					$last_li_in_sidebar = $sidebarAccordionSection.find( 'li' ).last();
 					$widgets_in_sidebar.awrInsertInGivenOrderBeforeElement( order , $last_li_in_sidebar );
-					addClassesToFirstAndLastWidgetsIn( $sidebarAccordionSection );
+					utils.addClassesToFirstAndLastWidgetsIn( $sidebarAccordionSection );
 					triggerIframeReassignIds();
 					triggerSortUpdateFor( sidebarId );
 				}
@@ -288,16 +291,16 @@
 			};
 
 			getWidgetFromDifferentSidebar = function() {
-				return getSidebarAccordionSection( parent_sidebar_of_widget_from_different_sidebar )
+				return utils.getSidebarAccordionSection( parent_sidebar_of_widget_from_different_sidebar )
 					.find( '#customize-control-widget_' + idOfWidgetFromDifferentSidebar ).detach();
 			};
 
 			getElementToInsertBefore = function() {
-				var $elementToInsertBefore = getSidebarAccordionSection( sidebarId )
+				var $elementToInsertBefore = utils.getSidebarAccordionSection( sidebarId )
 					.find( '.customize-control-widget_form' )
 					.eq( ordinalOfWidgetFromDifferentSidebar );
 				if ( $elementToInsertBefore.length === 0 ) {
-					$elementToInsertBefore = getSidebarAccordionSection( sidebarId ).find( '.customize-control-sidebar_widgets' );
+					$elementToInsertBefore = utils.getSidebarAccordionSection( sidebarId ).find( '.customize-control-sidebar_widgets' );
 				}
 				return $elementToInsertBefore;
 			};
@@ -309,7 +312,7 @@
 			parent_sidebar_of_widget_from_different_sidebar = getParentSidebarOfWidgetFromDifferentSidebar();
 			$widgetFromDifferentSidebar = getWidgetFromDifferentSidebar();
 			$widgetFromDifferentSidebar.insertBefore( getElementToInsertBefore() );
-			addClassesToFirstAndLastWidgetsIn( getSidebarAccordionSection( sidebarId ) );
+			utils.addClassesToFirstAndLastWidgetsIn( utils.getSidebarAccordionSection( sidebarId ) );
 			openWidgetCustomizerControl( sidebarId , idOfWidgetFromDifferentSidebar ); // new, need to test
 			triggerSortUpdateFor( sidebarId );
 			triggerSortUpdateFor( parent_sidebar_of_widget_from_different_sidebar );
