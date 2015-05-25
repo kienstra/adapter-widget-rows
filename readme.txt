@@ -3,8 +3,8 @@ Contributors: ryankienstra
 Donate link: http://jdrf.org/get-involved/ways-to-donate/
 Tags: widgets, Bootstrap, mobile, responsive, sidebars
 Requires at least: 4.0
-Tested up to: 4.1
-Stable tag: 1.0.0
+Tested up to: 4.2.2
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,10 +74,16 @@ No. You'll only see your header, footer, and widget rows. But you may create you
 
 == Changelog ==
 
+= 1.0.1 =
+* Fix bug where widget doesn't open.
+
 = 1.0.0 =
 * First version
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+* When you upgrade to WordPress 4.2, please upgrade this plugin. There's a bug fix for widgets that don't open.
 
 * N/A, first version
 

@@ -12,8 +12,7 @@
 
 		getWidgetThatIsOpenInCustomizerControls = function() {
 			var idOfOpenSection , wleWidgetRegex , generalWidgetRegex , awrRegex ,
-			    $openAccordionSection = $( '.open' , window.parent.document );
-
+				$openAccordionSection = $( '.open.control-subsection' , window.parent.document );
 			if ( ! $openAccordionSection.length ) {
 				return false; // there's no widget open in customizer controls
 			}

@@ -16,7 +16,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'AWR_PLUGIN_SLUG' , 'adapter-widget-rows' );
-define( 'AWR_PLUGIN_VERSION' , '1.0.0' );
+define( 'AWR_PLUGIN_VERSION' , '1.0.1' );
 define( 'AWR_ID_REGEX' , '/awr-[0-9]*-([0-9]*)/' );
 
 register_activation_hook( __FILE__ , 'awr_deactivate_if_early_wordpress_version' );
