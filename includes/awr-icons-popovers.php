@@ -5,8 +5,8 @@ if ( awr_current_user_can_edit_widgets() ) {
 }
 
 function awr_add_controls_to_widget( $params ) {
-	$widget_id = $params[ 0 ][ 'widget_id' ];
-	$sidebar_id = $params[ 0 ][ 'id' ];
+	$widget_id = $params[0]['widget_id'];
+	$sidebar_id = $params[0]['id'];
 	if ( sidebar_was_created_by_awr( $sidebar_id ) ) {
 		$edit_controls = awr_get_edit_controls( $sidebar_id , $widget_id );
 		$controls_in_wrapper = "<ul class='awr-edit-controls list-group'>
@@ -14,7 +14,7 @@ function awr_add_controls_to_widget( $params ) {
 							 {$edit_controls}
 						 </li>
 					</ul>";
-		$params[ 0 ][ 'after_widget' ]	= $controls_in_wrapper . $params[ 0][ 'after_widget' ];
+		$params[0]['after_widget']	= $controls_in_wrapper . $params[0]['after_widget'];
 	}
 	return $params;
 }
@@ -23,7 +23,7 @@ function sidebar_was_created_by_awr( $sidebar ) {
 	return preg_match( AWR_ID_REGEX , $sidebar );
 }
 
-function awr_get_edit_controls( $sidebar_id , $widget_id ) {
+function awr_get_edit_controls( $sidebar_id, $widget_id ) {
 	$url_for_edit = awr_get_url_for_edit( $sidebar_id , $widget_id );
 	$add_new_popover_link_and_content = awr_get_add_new_popover_link_and_content( $sidebar_id );
 	$delete_popover_link_and_content = awr_get_delete_popover_link_and_content( $sidebar_id , $widget_id );
@@ -37,10 +37,12 @@ function awr_get_edit_controls( $sidebar_id , $widget_id ) {
 	return $edit_controls;
 }
 
-function awr_get_url_for_edit( $sidebar_id , $widget_id ) {
-	$url = add_query_arg( array( 'awr_edit'	 => $sidebar_id ,									 'awr_widget' => $widget_id ,
+function awr_get_url_for_edit( $sidebar_id, $widget_id ) {
+	$url = add_query_arg( array(
+		'awr_edit'	 => $sidebar_id,
+		'awr_widget' => $widget_id,
 			      ) ,
-			      awr_get_customizer_url()
+		awr_get_customizer_url()
 	);
 	return $url;
 }
@@ -68,7 +70,7 @@ function awr_get_customizer_url_for_add_new( $sidebar_id ) {
 	$customizer_url = awr_get_customizer_url();
 	$customizer_url_for_add_new = add_query_arg(
 		array( 'awr_new' => $sidebar_id ) ,
-		$customizer_url );
+	$customizer_url );
 	return $customizer_url_for_add_new;
 }
 
@@ -76,8 +78,7 @@ function awr_get_popover_link( $type ) {
 	if ( 'new' == $type ) {
 		$glyph_suffix = 'plus';
 		$title = 'add new';
-	}
-	else if ( 'delete' == $type )	{
+	} elseif ( 'delete' == $type ) {
 		$glyph_suffix = 'trash';
 		$title = 'delete';
 	}
@@ -87,7 +88,7 @@ function awr_get_popover_link( $type ) {
 	 	</a>";
 }
 
-function awr_get_popover_content( $text , $sidebar_id , $widget_id = '' ) {
+function awr_get_popover_content( $text, $sidebar_id, $widget_id = '' ) {
 	global $post;
 	if ( ! isset( $post ) ) {
 		return;
@@ -97,18 +98,21 @@ function awr_get_popover_content( $text , $sidebar_id , $widget_id = '' ) {
 		$class = 'awr-delete';
 		$customizer_url = awr_get_customizer_url();
 
-		$widget_url = add_query_arg( array( 'awr_delete' => $sidebar_id ,
-													 'awr_widget' => $widget_id ) ,
-		 $customizer_url );
+		$widget_url = add_query_arg( array(
+			'awr_delete' => $sidebar_id,
+													 'awr_widget' => $widget_id,
+			),
+		$customizer_url );
 		$sidebar_url = add_query_arg( array( 'awr_delete_sidebar' => $sidebar_id ) ,
-																	$customizer_url );
+		$customizer_url );
 	}
 	if ( 'New' == $text ) {
 		$class = 'awr-add-new';
 		$page_id = $post->ID;
 		$widget_url = awr_get_customizer_url_for_add_new( $sidebar_id );
-		$sidebar_url = add_query_arg( array( 'awr_new_sidebar' => 'true' ,
-						     'awr_page_id'     => $page_id
+		$sidebar_url = add_query_arg( array(
+			'awr_new_sidebar' => 'true',
+						     'awr_page_id'     => $page_id,
 					      ) , awr_get_customizer_url()
 		);
 	}
@@ -120,7 +124,7 @@ function awr_get_popover_content( $text , $sidebar_id , $widget_id = '' ) {
 		</div>";
 }
 
-function awr_get_delete_popover_link_and_content( $sidebar_id , $widget_id ) {
+function awr_get_delete_popover_link_and_content( $sidebar_id, $widget_id ) {
 	$popover_for_delete = awr_get_popover_link( 'delete' );
 	$delete_popover_content = awr_get_popover_content( 'Delete' , $sidebar_id , $widget_id );
 	return $popover_for_delete . $delete_popover_content;

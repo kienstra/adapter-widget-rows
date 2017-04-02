@@ -13,7 +13,7 @@ function awr_get_all_page_titles_that_have_awr_sidebars() {
 }
 
 function awr_handle_pages( $all_pages_that_have_awr_sidebars ) {
-	foreach( $all_pages_that_have_awr_sidebars as $page ) {
+	foreach ( $all_pages_that_have_awr_sidebars as $page ) {
 		AWR_Page::manage( $page ); // includes/class-awr-page.php
 		awr_handle_sidebars_in_page( $page );
 	}
@@ -32,21 +32,21 @@ function awr_register_all_sidebars( $awr_index ) {
 	if ( ! $sidebars_in_page ) {
 		return;
 	}
-	foreach( $sidebars_in_page as $sidebar_id ) {
+	foreach ( $sidebars_in_page as $sidebar_id ) {
 		AWR_Sidebar::register( $sidebar_id , $awr_index );
 	}
 }
 
 function awr_get_page_id( $awr_index ) {
 	$map_awr_index_to_page_id = get_option( 'map_awr_index_to_page_id' );
-	$page_id = isset( $map_awr_index_to_page_id[ $awr_index ] ) ? $map_awr_index_to_page_id[ $awr_index ] : "";
+	$page_id = isset( $map_awr_index_to_page_id[ $awr_index ] ) ? $map_awr_index_to_page_id[ $awr_index ] : '';
 	return $page_id;
 }
 
 function awr_get_ids_of_sidebars_for_page( $page_id ) {
 	$ids = array();
 	$amount_of_sidebars = apply_filters( 'awr_amount_of_sidebars_on_page' , 6 );
-	for( $i = 1; $i <= $amount_of_sidebars; $i++ ) {
+	for ( $i = 1; $i <= $amount_of_sidebars; $i++ ) {
 		array_push( $ids , 'awr-' . $page_id . '-' . $i );
 	}
 	return $ids;

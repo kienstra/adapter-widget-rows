@@ -6,13 +6,13 @@
 		 * Sets up popovers at top of rows
 		 */
 		$( popoverSelector ).popover( {
-			  html	    : true ,
-			  placement : 'bottom' ,
-			  title	    : '' ,
-			  animation : false ,
-			  content   : function() {
-					    return $( this ).next().html();
-				    }
+			html	    : true ,
+			placement : 'bottom' ,
+			title	    : '' ,
+			animation : false ,
+			content   : function() {
+					return $( this ).next().html();
+			}
 			}
 		);
 

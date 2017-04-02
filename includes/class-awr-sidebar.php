@@ -10,13 +10,13 @@ class AWR_Sidebar {
 	private $awr_index;
 	private $sidebar_id;
 
-	function __construct( $sidebar_id , $awr_index ) {
+	function __construct( $sidebar_id, $awr_index ) {
 		$this->sidebar_id = $sidebar_id;
 		$this->awr_index = $awr_index;
 		$this->set_variables();
 	}
 
-	public static function register( $sidebar_id , $awr_index ) {
+	public static function register( $sidebar_id, $awr_index ) {
 		self::$instance = new self( $sidebar_id , $awr_index );
 		self::$instance->awr_register_sidebar();
 	}
@@ -54,14 +54,14 @@ class AWR_Sidebar {
 	private function awr_register_sidebar() {
 		$sidebar_name_to_display = $this->page_title . ': Row #' . $this->sidebar_ordinal;
 		if ( do_register_awr_sidebars() ) {
-			register_sidebar( array (
-				'name'	=> sprintf( __( '%s' , 'adapter-widget-rows' ) , $sidebar_name_to_display ) ,
-				'id'	=> $this->sidebar_id ,
-				'description'	=> __( 'Adapter Widget Row' , 'adapter-widget-rows' ) ,
-				'before_widget'	=> '<div id="%1$s" class="widget %2$s">' , /* must have 'widget' class for .sortable to work */
-				'after_widget'	=> '</div>' ,
-				'before_title'	=> '<h2>' ,
-				'after_title'	=> '</h2>' ,
+			register_sidebar( array(
+				'name'	=> $sidebar_name_to_display,
+				'id'	=> $this->sidebar_id,
+				'description'	=> __( 'Adapter Widget Row' , 'adapter-widget-rows' ),
+				'before_widget'	=> '<div id="%1$s" class="widget %2$s">', /* must have 'widget' class for .sortable to work */
+				'after_widget'	=> '</div>',
+				'before_title'	=> '<h2>',
+				'after_title'	=> '</h2>',
 			) );
 		}
 	}

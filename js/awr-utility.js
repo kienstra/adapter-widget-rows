@@ -24,8 +24,7 @@ var awrUtility = ( function( $ ) {
 	hideOrShowButtonToDeleteSidebar = function( $sidebar ) {
 		if ( hasWidgets( $sidebar ) && ( isOnlyOneSidebarOnPage() ) ) {
 			hideButtonToDeleteSidebar();
-		}
-		else {
+		} else {
 			showButtonToDeleteSidebar();
 		}
 	}
@@ -51,8 +50,7 @@ var awrUtility = ( function( $ ) {
 	setClassBasedOnChildWidgets = function( $sidebar ) {
 		if ( hasWidgets( $sidebar ) ) {
 			setHasChildWidget( $sidebar );
-		}
-		else if ( ! hasWidgets( $sidebar ) ) {
+		} else if ( ! hasWidgets( $sidebar ) ) {
 			setNoChildWidget( $sidebar );
 		}
 	}
@@ -68,8 +66,7 @@ var awrUtility = ( function( $ ) {
 	manageNumberOfSidebarsAndWidgets = function( $sidebar ) {
 		if ( ( ! hasWidgets( $sidebar ) ) && ( isOnlyOneSidebarOnPage() ) ) {
 			setOnlySidebarAndNoWidget( $sidebar );
-		}
-		else {
+		} else {
 			setPageHasMultipleSidebarsForWidgets( $sidebar );
 		}
 	}
@@ -83,7 +80,7 @@ var awrUtility = ( function( $ ) {
 		$sidebar.removeClass( 'awr-only-sidebar' );
 	}
 	/* End private functions */
-	
+
 	return { manageAmountsOfWidgetsAndRows : manageAmountsOfWidgetsAndRows };
 
 } )( jQuery );

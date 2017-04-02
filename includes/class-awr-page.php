@@ -30,12 +30,10 @@ class AWR_Page {
 	private function manage_page_and_update_record() {
 		if ( $this->page_should_be_deleted() ) {
 			$this->delete_post_and_update_record();
-		}
-		else if ( $this->page_is_in_awr_trash() ) {
+		} elseif ( $this->page_is_in_awr_trash() ) {
 			$this->insert_post_from_trash();
 			$this->maybe_update_record();
-		}
-		else {
+		} else {
 			$this->update_or_add_page();
 			$this->maybe_update_record();
 		}
@@ -72,22 +70,22 @@ class AWR_Page {
 		 $post_name = $old_page->post_name;
 
 		 $this->new_page_id = wp_insert_post( array(
-				'ID'		 => $page_id ,
-				'post_title'	 => $this->page_title ,
+				'ID'		 => $page_id,
+				'post_title'	 => $this->page_title,
 				'post_status'	 => 'publish',
-				'post_type'	 => 'page' ,
-				'post_author'	 => get_current_user_id() ,
-				'post_name'	 => $post_name ,
-		) );
+				'post_type'	 => 'page',
+				'post_author'	 => get_current_user_id(),
+				'post_name'	 => $post_name,
+		 ) );
 	}
 
 	function update_or_add_page() {
 		$this->new_page_id = wp_insert_post( array(
-				'ID'		=> $this->page_id ,
-				'post_title'	=> $this->page_title ,
-				'post_status'	=> 'publish' ,
-				'post_type'	=> 'page' ,
-				'post_author'	=> get_current_user_id() ,
+				'ID'		=> $this->page_id,
+				'post_title'	=> $this->page_title,
+				'post_status'	=> 'publish',
+				'post_type'	=> 'page',
+				'post_author'	=> get_current_user_id(),
 		) );
 	}
 

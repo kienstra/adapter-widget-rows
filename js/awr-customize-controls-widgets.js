@@ -2,7 +2,7 @@
 	$( function() {
 
 		var utils = {};
-		
+
 		/* Begin utility functions */
 
 		utils.getSidebarAccordionSection = function( sidebarId ) {
@@ -32,14 +32,11 @@
 
 			if ( awr_edit && awr_widget ) {
 				utils.openWidgetCustomizerControl( awr_edit , awr_widget );
-			}
-			else if ( wle_target ) {
+			} else if ( wle_target ) {
 				utils.openWleAccordionSection( wle_target );
-			}
-			else if ( awr_new ) {
+			} else if ( awr_new ) {
 				utils.openNewWidgetPanelForSidebar( awr_new );
-			}
-			else if ( awr_delete && awr_widget ) {
+			} else if ( awr_delete && awr_widget ) {
 				utils.deleteWidgetFromCustomizerControls( awr_widget , awr_delete );
 			}
 		};
@@ -47,10 +44,10 @@
 		utils.findQueryVarValue = function( query_var_key ) {
 			 var href = encodeURI( document.location.href ) ,
 			     query_value = href.match( query_var_key + '=([^&^#]*)' );
-			 if ( query_value && query_value.length > 0 ) {
-				 return query_value[ 1 ];
-			 }
-		 };
+			if ( query_value && query_value.length > 0 ) {
+				return query_value[ 1 ];
+			}
+		};
 
 		utils.openWidgetCustomizerControl = function( sidebarId , widget_id ) {
 			var scrollInterval , interval;
@@ -64,7 +61,7 @@
 
 			scrollInterval = function() {
 				utils.scrollSidebarToTopOfControls( sidebarId );
-				clearInterval( interval ) ;
+				clearInterval( interval );
 			};
 			interval = setInterval( scrollInterval , 200 );
 		};
@@ -211,7 +208,6 @@
 			    order = data.sortable_order ,
 			    parent_sidebar_of_each_widget = data.parent_sidebars;
 
-
 			sidebarHasWidgetFromOtherSidebar = function() {
 				parent_sidebar_of_each_widget.map( function( parent_sidebar , index ) {
 					if ( parent_sidebar !== sidebarId ) {
@@ -220,7 +216,7 @@
 				} );
 			};
 
-			triggerIframeReassignIds =  function() {
+			triggerIframeReassignIds = function() {
 				$( 'body' ).trigger( 'awr-reassign-identifiers' , { sidebarId : sidebarId } );
 			};
 
@@ -299,7 +295,7 @@
 			idOfWidgetFromDifferentSidebar = getIdOfWidgetFromDifferentSidebar();
 			parent_sidebar_of_widget_from_different_sidebar = getParentSidebarOfWidgetFromDifferentSidebar();
 			$widgetFromDifferentSidebar = getWidgetFromDifferentSidebar();
-			
+
 			$widgetFromDifferentSidebar.insertBefore( getElementToInsertBefore() );
 			utils.addClassesToFirstAndLastWidgetsIn( utils.getSidebarAccordionSection( sidebarId ) );
 			utils.openWidgetCustomizerControl( sidebarId , idOfWidgetFromDifferentSidebar ); // new, need to test

@@ -3,10 +3,10 @@
 * Bootstrap Widgetized Rows Default Template
 */
 
-if ( ! defined('ABSPATH') ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 get_header();
-	AWR_Markup::echo_sidebars();	 
-get_footer(); ?>
+	AWR_Markup::echo_sidebars();
+get_footer();

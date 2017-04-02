@@ -29,7 +29,7 @@ class AWR_Markup {
 	}
 
 	private function echo_markup_to_page() {
-		foreach( $this->sidebars_in_page as $sidebar ) {
+		foreach ( $this->sidebars_in_page as $sidebar ) {
 			$this->maybe_echo_sidebar_markup( $sidebar );
 		}
 		if ( $this->page_has_no_sidebars_with_widgets() ) {
@@ -50,12 +50,12 @@ class AWR_Markup {
 
 	private function echo_sidebar_markup( $sidebar ) {
 		echo '<div class="row awr-row" id="' . esc_attr( $sidebar ) . '">';
-			if ( dynamic_sidebar( $sidebar ) );
+		if ( dynamic_sidebar( $sidebar ) ) {}
 		echo '</div>';
 	}
 
 	private function page_has_no_sidebars_with_widgets() {
-		foreach( $this->sidebars_in_page as $sidebar ) {
+		foreach ( $this->sidebars_in_page as $sidebar ) {
 			if ( is_active_sidebar( $sidebar ) ) {
 				return false;
 			}

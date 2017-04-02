@@ -31,8 +31,7 @@
 			setElementBeforeNewButton = function() {
 				if ( $lastPageInput.length === 0 ) {
 					$elementBeforeNewButton = $( '.awr-options-form .form-table td' );
-				}
-				else {
+				} else {
 					$elementBeforeNewButton = $lastPageInput.next();
 				}
 			};
@@ -69,7 +68,7 @@
 						href  : '#' ,
 						class : 'button-secondary awr-delete-page' ,
 					       }
-					     )
+					)
 					.data( 'awr-target' , idNewPageInput )
 					.html( 'Delete' );
 			};
@@ -84,7 +83,7 @@
 
 			insertFieldsIntoPage = function() {
 				[ $newPageDeleteButton , $newPageInput , $breakTags ].map( function( element , index ) {
-				element.insertAfter( $elementBeforeNewButton );
+					element.insertAfter( $elementBeforeNewButton );
 				} );
 			};
 

@@ -97,7 +97,7 @@
 					    newClasses = currentClasses.replace( /col-md-[\d]+/ , newColumnClass );
 					$( this ).attr( 'class' , newClasses );
 				} );
-			 } );
+			} );
 		};
 
 		getParentSidebarsOfSortableWidgets = function( $sortable_widgets_container ) {
@@ -147,7 +147,7 @@
 				sidebarId       : sidebarId ,
 				parent_sidebars : parentSidebarOfEachWidget ,
 				sortable_order	: sortable_order
-			       };
+			};
 
 			parent.jQuery( 'body' ).trigger( 'awr-remove-and-insert-widget' , data );
 		} );
@@ -165,7 +165,7 @@
 				sidebarId	: sidebarId ,
 				parent_sidebars : parent_sidebar_of_each_widget ,
 				sortable_order	: sortable_order ,
-			       };
+			};
 			parent.jQuery( 'body' ).trigger( 'awr-reorder-widgets' , data );
 		} );
 
@@ -184,9 +184,9 @@
 
 		$( '.awr-edit' ).live( 'click' , function() {
 			var data = {
-				    widget_id  : getWidgetId( $( this ) ) ,
-				    sidebarId : getIdOfParentSidebar( $( this ) )
-				   };
+				widget_id  : getWidgetId( $( this ) ) ,
+				sidebarId : getIdOfParentSidebar( $( this ) )
+			};
 			parent.jQuery( 'body' ).trigger( 'awr-open-widget-control' , data );
 			return false;
 		} );
@@ -199,12 +199,12 @@
 		} );
 
 		$( '.awr-delete-widget' ).live( 'click' , function() {
-			var widget_id = getWidgetId( $( this) ) ,
+			var widget_id = getWidgetId( $( this ) ) ,
 			    sidebarId	= getIdOfParentSidebar( $( this ) ) ,
 			    data = {
 				    widget_id : widget_id ,
 				    sidebarId : sidebarId
-				   };
+			};
 
 			parent.jQuery( 'body' ).trigger( 'awr-delete-widget' , data );
 
