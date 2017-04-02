@@ -68,7 +68,7 @@ class Adapter_Widget_Rows_Plugin {
 	 */
 	public function deactivate_if_early_wordpress_version() {
 		if ( version_compare( get_bloginfo( 'version' ), $this->minimum_wp_version, '<' ) ) {
-			deactivate_plugins( basename( __FILE__ ) );
+			deactivate_plugins( plugins_url( $this->plugin_slug . '.php' ) );
 		}
 	}
 
@@ -144,8 +144,8 @@ class Adapter_Widget_Rows_Plugin {
 	public function enqueue_customizer_scripts() {
 		if ( $this->current_user_can_edit_widgets() ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
-			wp_enqueue_script( $this->plugin_slug . '-utility', plugins_url( '/js/awr-utility.js' , __FILE__ ), array( 'jquery' ), $this->plugin_version, true );
-			wp_enqueue_script( $this->plugin_slug . '-customizer-iframe', plugins_url( '/js/awr-customizer-iframe.js' , __FILE__ ), array( 'jquery', $this->plugin_slug . '-utility', 'jquery-ui-sortable' ), $this->plugin_version, true );
+			wp_enqueue_script( $this->plugin_slug . '-utility', plugins_url( $this->plugin_slug . '/js/awr-utility.js' ), array( 'jquery' ), $this->plugin_version, true );
+			wp_enqueue_script( $this->plugin_slug . '-customizer-iframe', plugins_url( $this->plugin_slug . '/js/awr-customizer-iframe.js' ), array( 'jquery', $this->plugin_slug . '-utility', 'jquery-ui-sortable' ), $this->plugin_version, true );
 		}
 	}
 
@@ -155,7 +155,7 @@ class Adapter_Widget_Rows_Plugin {
 	 * @return void.
 	 */
 	public function enqueue_customize_control_scripts() {
-		wp_enqueue_script( $this->plugin_slug . '-customize-controls-widgets', plugins_url( '/js/awr-customize-controls-widgets.js' , __FILE__ ), array( 'jquery' ), $this->plugin_version, true );
+		wp_enqueue_script( $this->plugin_slug . '-customize-controls-widgets', plugins_url( $this->plugin_slug . '/js/awr-customize-controls-widgets.js' ), array( 'jquery' ), $this->plugin_version, true );
 	}
 
 	/**
@@ -166,7 +166,7 @@ class Adapter_Widget_Rows_Plugin {
 	 */
 	public function admin_scripts( $hook_suffix ) {
 		if ( 'settings_page_awr_options_page' === $hook_suffix ) {
-			wp_enqueue_script( $this->plugin_slug . '-options-pages', plugins_url( '/js/awr-options-pages.js' , __FILE__ ), array( 'jquery' ), $this->plugin_version, true );
+			wp_enqueue_script( $this->plugin_slug . '-options-pages', plugins_url( $this->plugin_slug . '/js/awr-options-pages.js' ), array( 'jquery' ), $this->plugin_version, true );
 		}
 	}
 
