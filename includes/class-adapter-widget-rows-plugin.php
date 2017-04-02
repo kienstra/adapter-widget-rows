@@ -1,6 +1,6 @@
 <?php
 /**
- * Class file for Adapter_Gravity_Add_On_Plugin
+ * Class file for Adapter_Widget_Rows_Plugin
  *
  * @package AdapterWidgetRows
  */
@@ -27,6 +27,13 @@ class Adapter_Widget_Rows_Plugin {
 	public $plugin_version = '1.0.1';
 
 	/**
+	 * Minimum version of WP allowed.
+	 *
+	 * @var string
+	 */
+	public $minimum_wp_version = '3.8';
+
+	/**
 	 * Regex for row ids.
 	 *
 	 * @var string
@@ -44,8 +51,8 @@ class Adapter_Widget_Rows_Plugin {
 	 * Construct the class.
 	 */
 	public function __construct() {
-		register_activation_hook( array( $this, 'deactivate_if_early_wordpress_version' ) );
-		register_activation_hook( array( $this, 'install_with_default_options' ) );
+		register_activation_hook( plugins_url( $this->plugin_slug . '.php' ), array( $this, 'deactivate_if_early_wordpress_version' ) );
+		register_activation_hook( plugins_url( $this->plugin_slug . '.php' ), array( $this, 'install_with_default_options' ) );
 		add_action( 'plugins_loaded', array( $this, 'plugin_localization' ) );
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_files' ) );
 		add_action( 'wp_enqueue_scripts' , array( $this, 'enqueue_scripts_and_styles' ) );
@@ -54,8 +61,13 @@ class Adapter_Widget_Rows_Plugin {
 		add_action( 'admin_enqueue_scripts' , array( $this, 'admin_scripts' ) );
 	}
 
+	/**
+	 * Block plugin activation if WP is below a certain version.
+	 *
+	 * @return void.
+	 */
 	public function deactivate_if_early_wordpress_version() {
-		if ( version_compare( get_bloginfo( 'version' ) , '3.8', '<' ) ) {
+		if ( version_compare( get_bloginfo( 'version' ), $this->minimum_wp_version, '<' ) ) {
 			deactivate_plugins( basename( __FILE__ ) );
 		}
 	}
@@ -69,6 +81,11 @@ class Adapter_Widget_Rows_Plugin {
 		load_plugin_textdomain( $this->plugin_slug, false, $this->plugin_slug . '/languages' );
 	}
 
+	/**
+	 * On plugin activation, set default options.
+	 *
+	 * @return void.
+	 */
 	public function install_with_default_options() {
 		add_option( 'map_awr_index_to_page_title', array() );
 		add_option( 'map_awr_index_to_page_id', array() );
@@ -96,11 +113,21 @@ class Adapter_Widget_Rows_Plugin {
 		}
 	}
 
+	/**
+	 * Whether the current user can edit widgets.
+	 *
+	 * @return boolean $can_edit If the user can edit widgets.
+	 */
 	public function current_user_can_edit_widgets() {
 		$capability = apply_filters( 'awr_capability_to_edit_widgets', 'manage_options' );
 		return current_user_can( $capability );
 	}
 
+	/**
+	 * Enqueue front-end JS and CSS files.
+	 *
+	 * @return void.
+	 */
 	public function enqueue_scripts_and_styles() {
 		if ( page_has_awr_rows() && $this->current_user_can_edit_widgets() ) {
 			wp_enqueue_style( $this->plugin_slug . '-priveleged-user', plugins_url( '/css/awr-priveleged-user.css' , __FILE__ ), array(), $this->plugin_version );
@@ -109,6 +136,11 @@ class Adapter_Widget_Rows_Plugin {
 		}
 	}
 
+	/**
+	 * Enqueue JS files for the Customizer.
+	 *
+	 * @return void.
+	 */
 	public function enqueue_customizer_scripts() {
 		if ( $this->current_user_can_edit_widgets() ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
@@ -117,13 +149,24 @@ class Adapter_Widget_Rows_Plugin {
 		}
 	}
 
+	/**
+	 * Enqueue JS files for the Customizer controls.
+	 *
+	 * @return void.
+	 */
 	public function enqueue_customize_control_scripts() {
 		wp_enqueue_script( $this->plugin_slug . '-customize-controls-widgets', plugins_url( '/js/awr-customize-controls-widgets.js' , __FILE__ ), array( 'jquery' ), $this->plugin_version, true );
 	}
 
+	/**
+	 * Enqueue script for /wp-admin.
+	 *
+	 * @param string $hook_suffix The admin page currently displaying.
+	 * @return void.
+	 */
 	public function admin_scripts( $hook_suffix ) {
-		if ( 'settings_page_awr_options_page' == $hook_suffix ) {
-			wp_enqueue_script( AWR_PLUGIN_SLUG . '-options-pages', plugins_url( '/js/awr-options-pages.js' , __FILE__ ), array( 'jquery' ), $this->plugin_version, true );
+		if ( 'settings_page_awr_options_page' === $hook_suffix ) {
+			wp_enqueue_script( $this->plugin_slug . '-options-pages', plugins_url( '/js/awr-options-pages.js' , __FILE__ ), array( 'jquery' ), $this->plugin_version, true );
 		}
 	}
 
