@@ -53,9 +53,9 @@ function awr_settings_setup() {
 		foreach ( $map_awr_index_to_page_title as $awr_index => $page_title ) {
 			if ( $page_title ) {
 				$delete_text = __( 'Delete' , 'adapter-widget-rows' );
-				echo "<input type='text' id='awr-page-$awr_index' class='awr-page-input' value='$page_title' name='map_awr_index_to_page_title[$awr_index]' />
-						<a href='#' class='button-secondary awr-delete-page' data-awr-target='awr-page-$awr_index'>{$delete_text}</a>						
-						</br></br> \n";
+				echo '<input type="text" id="awr-page-' . esc_attr( $awr_index ) . '" class="awr-page-input" value="' . esc_attr( $page_title ) . '" name="map_awr_index_to_page_title[' . esc_attr( $awr_index ) . ']" />
+						<a href="#" class="button-secondary awr-delete-page" data-awr-target="awr-page-' . esc_attr( $awr_index ) . '">' . esc_html( $delete_text ) . '</a>
+						</br></br>';
 			}
 		}
 	}
