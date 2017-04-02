@@ -53,7 +53,7 @@ class AWR_Sidebar {
 
 	private function awr_register_sidebar() {
 		$sidebar_name_to_display = $this->page_title . ': Row #' . $this->sidebar_ordinal;
-		if ( do_register_awr_sidebars() ) {
+		if ( $this->do_register_awr_sidebars() ) {
 			register_sidebar( array(
 				'name'	=> $sidebar_name_to_display,
 				'id'	=> $this->sidebar_id,
@@ -65,14 +65,15 @@ class AWR_Sidebar {
 			) );
 		}
 	}
-}	/* end class AWR_Sidebar */
 
-function do_register_awr_sidebars() {
-	global $wp_customize;
-	if ( ! is_admin() ) {
-		return true;
+	public function do_register_awr_sidebars() {
+		global $wp_customize;
+		if ( ! is_admin() ) {
+			return true;
+		}
+		if ( is_admin() && isset( $wp_customize ) ) {
+			return true;
+		}
 	}
-	if ( is_admin() && isset( $wp_customize ) ) {
-		return true;
-	}
+
 }
