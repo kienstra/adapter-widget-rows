@@ -1,5 +1,15 @@
 <?php
+/**
+ * Class file for AWR_Sidebar
+ *
+ * @package AdapterWidgetRows
+ */
 
+namespace AdapterWidgetRows;
+
+/**
+ * Class AWR_Sidebar
+ */
 class AWR_Sidebar {
 
 	private static $instance;
@@ -10,7 +20,7 @@ class AWR_Sidebar {
 	private $awr_index;
 	private $sidebar_id;
 
-	function __construct( $sidebar_id, $awr_index ) {
+	public function __construct( $sidebar_id, $awr_index ) {
 		$this->sidebar_id = $sidebar_id;
 		$this->awr_index = $awr_index;
 		$this->set_variables();
@@ -21,23 +31,23 @@ class AWR_Sidebar {
 		self::$instance->awr_register_sidebar();
 	}
 
-	private function set_variables() {
+	public function set_variables() {
 		$this->set_page_id();
 		$this->set_page_title();
 		$this->set_sidebar_ordinal_and_increment_map();
 	}
 
-	private function set_page_id() {
+	public function set_page_id() {
 		$map_awr_index_to_page_id = get_option( 'map_awr_index_to_page_id' );
 		$this->page_id = $map_awr_index_to_page_id[ $this->awr_index ];
 	}
 
-	private function set_page_title() {
+	public function set_page_title() {
 		$map_awr_index_to_page_title = get_option( 'map_awr_index_to_page_title' );
 		$this->page_title = $map_awr_index_to_page_title[ $this->awr_index ];
 	}
 
-	private function set_sidebar_ordinal_and_increment_map() {
+	public function set_sidebar_ordinal_and_increment_map() {
 		if ( ! isset( self::$map_page_to_number_of_awr_sidebars[ $this->page_id ] ) ) {
 			$this->sidebar_ordinal = 1;
 			self::$map_page_to_number_of_awr_sidebars[ $this->page_id ] = 2;
@@ -47,11 +57,11 @@ class AWR_Sidebar {
 		}
 	}
 
-	private function increment_ordinal() {
+	public function increment_ordinal() {
 		self::$map_page_to_number_of_awr_sidebars[ $this->page_id ] = 1 + self::$map_page_to_number_of_awr_sidebars[ $this->page_id ];
 	}
 
-	private function awr_register_sidebar() {
+	public function awr_register_sidebar() {
 		$sidebar_name_to_display = $this->page_title . ': Row #' . $this->sidebar_ordinal;
 		if ( $this->do_register_awr_sidebars() ) {
 			register_sidebar( array(
@@ -66,14 +76,13 @@ class AWR_Sidebar {
 		}
 	}
 
+	/**
+	 * Whether to register the plugin's widget sidebars.
+	 *
+	 * @return bool $do_register Whether to register sidebars
+	 */
 	public function do_register_awr_sidebars() {
-		global $wp_customize;
-		if ( ! is_admin() ) {
-			return true;
-		}
-		if ( is_admin() && isset( $wp_customize ) ) {
-			return true;
-		}
+		return ( is_customize_preview() || ! is_admin() );
 	}
 
 }
