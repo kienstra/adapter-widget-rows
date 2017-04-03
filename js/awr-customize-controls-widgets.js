@@ -25,10 +25,10 @@
 
 		utils.manageUriVariables = function() {
 			var awr_edit = utils.findQueryVarValue( 'awr_edit' ) ,
-			    awr_delete = utils.findQueryVarValue( 'awr_delete' ) ,
-			    awr_new = utils.findQueryVarValue( 'awr_new' ) ,
-			    awr_widget = utils.findQueryVarValue( 'awr_widget' ) ,
-			    wle_target = utils.findQueryVarValue( 'wle_target' );
+				awr_delete = utils.findQueryVarValue( 'awr_delete' ) ,
+				awr_new = utils.findQueryVarValue( 'awr_new' ) ,
+				awr_widget = utils.findQueryVarValue( 'awr_widget' ) ,
+				wle_target = utils.findQueryVarValue( 'wle_target' );
 
 			if ( awr_edit && awr_widget ) {
 				utils.openWidgetCustomizerControl( awr_edit , awr_widget );
@@ -43,7 +43,7 @@
 
 		utils.findQueryVarValue = function( query_var_key ) {
 			 var href = encodeURI( document.location.href ) ,
-			     query_value = href.match( query_var_key + '=([^&^#]*)' );
+				 query_value = href.match( query_var_key + '=([^&^#]*)' );
 			if ( query_value && query_value.length > 0 ) {
 				return query_value[ 1 ];
 			}
@@ -96,9 +96,9 @@
 				return;
 			}
 			var $accordionContainer = $( '.accordion-container' ) ,
-			    currentScrollTop = $accordionContainer.scrollTop() ,
-			    elementOffset = $element.offset().top ,
-			    newScrollTop = elementOffset + currentScrollTop;
+				currentScrollTop = $accordionContainer.scrollTop() ,
+				elementOffset = $element.offset().top ,
+				newScrollTop = elementOffset + currentScrollTop;
 			$accordionContainer.scrollTop( newScrollTop );
 		};
 
@@ -128,7 +128,7 @@
 
 		utils.scrollSidebarToTopOfControls = function( sidebarId ) {
 			var currentScrollTopValue = $( '.accordion-container' ).scrollTop() ,
-			    newScrollTopValue = currentScrollTopValue + $( '#accordion-section-sidebar-widgets-' + sidebarId ).position().top;
+				newScrollTopValue = currentScrollTopValue + $( '#accordion-section-sidebar-widgets-' + sidebarId ).position().top;
 			$( '.accordion-container' ).scrollTop( newScrollTopValue );
 		};
 
@@ -176,7 +176,7 @@
 
 		$.fn.awrInsertInGivenOrderBeforeElement = function( order , element ) {
 			var index , widgetId , $elementToInsert ,
-			    widgets = [];
+				widgets = [];
 
 			for ( index in order ) {
 				widgetId = order[ index ];
@@ -202,11 +202,11 @@
 		 */
 		$( 'body' ).bind( 'awr-reorder-widgets' , function( event , data ) {
 			var sidebarHasWidgetFromOtherSidebar , triggerIframeReassignIds ,
-			    reorderCustomizeControlsSidebarWidgets ,
-			    sidebarIdWithUnderscores = data.sidebarId ,
-			    sidebarId = sidebarIdWithUnderscores.replace( /_/g , '-' ) ,
-			    order = data.sortable_order ,
-			    parent_sidebar_of_each_widget = data.parent_sidebars;
+				reorderCustomizeControlsSidebarWidgets ,
+				sidebarIdWithUnderscores = data.sidebarId ,
+				sidebarId = sidebarIdWithUnderscores.replace( /_/g , '-' ) ,
+				order = data.sortable_order ,
+				parent_sidebar_of_each_widget = data.parent_sidebars;
 
 			sidebarHasWidgetFromOtherSidebar = function() {
 				parent_sidebar_of_each_widget.map( function( parent_sidebar , index ) {
@@ -222,8 +222,8 @@
 
 			reorderCustomizeControlsSidebarWidgets = function( sidebarId , order ) {
 				var $last_li_in_sidebar,
-				    $sidebarAccordionSection = utils.getSidebarAccordionSection( sidebarId ) ,
-				    $widgets_in_sidebar = $sidebarAccordionSection.find( '.customize-control-widget_form' );
+					$sidebarAccordionSection = utils.getSidebarAccordionSection( sidebarId ) ,
+					$widgets_in_sidebar = $sidebarAccordionSection.find( '.customize-control-widget_form' );
 				if ( $widgets_in_sidebar.length !== order.length ) {
 					return false; // there's been a deletion or addition, no need to reorder widgets
 				} else if ( sidebarHasWidgetFromOtherSidebar() ) {
@@ -244,13 +244,13 @@
 
 		$( 'body' ).bind( 'awr-remove-and-insert-widget' , function( event , data ) {
 			var getOrdinalOfWidgetFromDifferentSidebar ,
-			    getIdOfWidgetFromDifferentSidebar ,
-			    getParentSidebarOfWidgetFromDifferentSidebar ,
-			    getWidgetFromDifferentSidebar ,
-			    sidebarIdWithUnderscores = data.sidebarId ,
-			    sidebarId = sidebarIdWithUnderscores.replace( /_/g , '-' ) ,
-			    order = data.sortable_order ,
-			    parent_sidebars = data.parent_sidebars ;
+				getIdOfWidgetFromDifferentSidebar ,
+				getParentSidebarOfWidgetFromDifferentSidebar ,
+				getWidgetFromDifferentSidebar ,
+				sidebarIdWithUnderscores = data.sidebarId ,
+				sidebarId = sidebarIdWithUnderscores.replace( /_/g , '-' ) ,
+				order = data.sortable_order ,
+				parent_sidebars = data.parent_sidebars ;
 
 			/* Begin private methods */
 			getOrdinalOfWidgetFromDifferentSidebar = function() {
@@ -306,7 +306,7 @@
 
 		$( 'body' ).bind( 'awr-delete-widget' , function( event , data ) {
 			var widget_id = data.widget_id ,
-			    sidebarId = data.sidebarId;
+				sidebarId = data.sidebarId;
 			utils.deleteWidgetFromCustomizerControls( widget_id , sidebarId );
 		} );
 
@@ -316,7 +316,7 @@
 
 		$( 'body' ).bind( 'awr-open-widget-control' , function( event , data ) {
 			var widget_id = data.widget_id ,
-			    sidebarId = data.sidebarId;
+				sidebarId = data.sidebarId;
 			utils.openWidgetCustomizerControl( sidebarId , widget_id );
 		} );
 
