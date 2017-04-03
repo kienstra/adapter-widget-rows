@@ -19,7 +19,7 @@ License: GPLv2
 
 */
 
-require_once dirname( __FILE__ ) . '/includes/class-adapter-widget-rows-plugin.php';
+require_once dirname( __FILE__ ) . '/php/class-adapter-widget-rows-plugin.php';
 
 global $adapter_widget_rows_plugin;
 $adapter_widget_rows_plugin = new Adapter_Widget_Rows_Plugin();
