@@ -51,10 +51,11 @@ class Adapter_Widget_Rows_Plugin {
 	 * Construct the class.
 	 */
 	public function __construct() {
-		register_activation_hook( plugins_url( $this->plugin_slug . '.php' ), array( $this, 'deactivate_if_early_wordpress_version' ) );
-		register_activation_hook( plugins_url( $this->plugin_slug . '.php' ), array( $this, 'install_with_default_options' ) );
+		register_activation_hook( plugins_url( $this->plugin_slug . '/' . $this->plugin_slug . '.php' ), array( $this, 'deactivate_if_early_wordpress_version' ) );
+		register_activation_hook( plugins_url( $this->plugin_slug . '/' . $this->plugin_slug . '.php' ), array( $this, 'install_with_default_options' ) );
 		add_action( 'plugins_loaded', array( $this, 'plugin_localization' ) );
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_files' ) );
+		add_action( 'plugins_loaded', array( $this, 'instantiate_classes' ) );
 		add_action( 'wp_enqueue_scripts' , array( $this, 'enqueue_scripts_and_styles' ) );
 		add_action( 'customize_register', array( $this, 'enqueue_customizer_scripts' ) );
 		add_action( 'customize_controls_enqueue_scripts' , array( $this, 'enqueue_customize_control_scripts' ) );
@@ -68,17 +69,8 @@ class Adapter_Widget_Rows_Plugin {
 	 */
 	public function deactivate_if_early_wordpress_version() {
 		if ( version_compare( get_bloginfo( 'version' ), $this->minimum_wp_version, '<' ) ) {
-			deactivate_plugins( plugins_url( $this->plugin_slug . '.php' ) );
+			deactivate_plugins( plugins_url( $this->plugin_slug . '/' . $this->plugin_slug . '.php' ) );
 		}
-	}
-
-	/**
-	 * Load the textdomain for the plugin, enabling translation.
-	 *
-	 * @return void.
-	 */
-	public function plugin_localization() {
-		load_plugin_textdomain( $this->plugin_slug, false, $this->plugin_slug . '/languages' );
 	}
 
 	/**
@@ -90,6 +82,15 @@ class Adapter_Widget_Rows_Plugin {
 		add_option( 'map_awr_index_to_page_title', array() );
 		add_option( 'map_awr_index_to_page_id', array() );
 		add_option( 'awr_titles_in_trash', array() );
+	}
+
+	/**
+	 * Load the textdomain for the plugin, enabling translation.
+	 *
+	 * @return void.
+	 */
+	public function plugin_localization() {
+		load_plugin_textdomain( $this->plugin_slug, false, $this->plugin_slug . '/languages' );
 	}
 
 	/**
@@ -109,8 +110,18 @@ class Adapter_Widget_Rows_Plugin {
 		);
 
 		foreach ( $files_slugs as $file_slug ) {
-			require_once __DIR__ . $file_slug . '.php';
+			require_once __DIR__ . '/' . $file_slug . '.php';
 		}
+	}
+
+	/**
+	 * Instantiate the plugin classes.
+	 *
+	 * @return void.
+	 */
+	public function instantiate_classes() {
+		$this->components['sidebar-options'] = new Sidebar_Options( $this );
+		$this->components['icons-popovers'] = new Icons_Popovers( $this );
 	}
 
 	/**
