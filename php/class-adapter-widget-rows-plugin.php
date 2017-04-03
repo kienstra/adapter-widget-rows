@@ -100,7 +100,7 @@ class Adapter_Widget_Rows_Plugin {
 	 */
 	public function load_plugin_files() {
 		$files_slugs = array(
-			'bootstrap-column-classes',
+			'class-bootstrap-column-classes',
 			'class-awr-sidebar',
 			'class-awr-markup',
 			'awr-icons-popovers',
@@ -122,6 +122,7 @@ class Adapter_Widget_Rows_Plugin {
 	public function instantiate_classes() {
 		$this->components['sidebar-options'] = new Sidebar_Options( $this );
 		$this->components['icons-popovers'] = new Icons_Popovers( $this );
+		$this->components['bootstrap-column-classes'] = new Bootstrap_Column_Classes( $this );
 	}
 
 	/**
